@@ -9,16 +9,19 @@ boolean helpGrid = true;
 
 //-----------------------------------------------------
 
+final static int nGenerators = 18;
+
+Generator[] generator;
 
 PImage mapping;
 
-static final int LEFT_TO_RIGHT = 0;
-static final int RIGHT_TO_LEFT = 1;
+static final int LEFT_RIGHT = 0;
+static final int RIGHT_LEFT = 1;
 
-static final int FULL_LENGTH = 0;
-static final int THREE_QUARTER_LENGTH = 1;
-static final int HALF_LENGTH = 2;
-static final int QUARTER_LENGTH = 3;
+static final int FULL_LENGTH = 3;
+static final int THREE_QUARTER_LENGTH = 2;
+static final int HALF_LENGTH = 1;
+static final int QUARTER_LENGTH = 0;
 
 
 void setup() {
@@ -27,7 +30,11 @@ void setup() {
 
   mapping = loadImage("data/mapping.png");
   
-   
+  
+  generator = new Generator[nGenerators];
+  for (int i = 0; i < nGenerators ; i++){
+   generator[i] = new Generator(i);
+  }
 }
 
 void draw() {
@@ -37,5 +44,8 @@ void draw() {
     image(mapping, 0, 0);
   }
   
+  for (int i = 0; i < generator.length; i++){
+   generator[i].update(); 
+  }
   
 }
