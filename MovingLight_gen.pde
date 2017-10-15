@@ -1,4 +1,4 @@
-import de.looksgood.ani.*;
+import de.looksgood.ani.*; //<>//
 import de.looksgood.ani.easing.*;
 
 // http://multiply.org/processing/ -- timed events -- TODO?
@@ -10,13 +10,17 @@ import de.looksgood.ani.easing.*;
 
 int pixelSize = 2; //Determines how many pixels on the screen define 1 pixel on LED strip
 
-boolean helpGrid = false;
+boolean helpGrid = true;
 
 //-----------------------------------------------------
 
-int lengthTunnel = pixelSize * 50 * 5;
+int widthOuterTunnel = 37 * pixelSize;
 
-final static int nGenerators = 18;
+int lengthTunnel = int(pixelSize * 75);
+
+int widthLEDStrip = 30 * pixelSize;
+
+final static int nGenerators = 16;
 
 Generator[] generator;
 
@@ -25,15 +29,16 @@ PImage mapping;
 static final int LEFT_RIGHT = 0;
 static final int RIGHT_LEFT = 1;
 
+static final int FULL_LENGTH_TUNNEL = 150;
 static final int FULL_LENGTH = 100;
-static final int THREE_QUARTER_LENGTH = 2;
-static final int HALF_LENGTH = 1;
-static final int QUARTER_LENGTH = 0;
+static final int THREE_QUARTER_LENGTH = 75;
+static final int HALF_LENGTH = 50;
+static final int QUARTER_LENGTH = 25;
 
 
 void setup() {
 
-  size(600, 600);
+  size(600, 630);
 
   mapping = loadImage("data/mapping.png");
 
@@ -41,7 +46,11 @@ void setup() {
   for (int i = 0; i < nGenerators; i++) {
     generator[i] = new Generator(i);
   }
+
+  createGrid();
   
+  println(lengthTunnel);
+
   Ani.init(this);
 }
 
@@ -57,11 +66,10 @@ void draw() {
   }
 
   if (frameCount % 30 == 0) {
-    println("adding pulses");
-    
-    generator[0].addPulse(1, FULL_LENGTH);
-    generator[1].addPulse(1, FULL_LENGTH);
-    generator[2].addPulse(1, FULL_LENGTH);
-    generator[3].addPulse(1, FULL_LENGTH); //<>//
+   // println("adding pulses");
+
+    for (int i = 0; i < nGenerators; i++) {
+      generator[i].addPulse(3, FULL_LENGTH_TUNNEL);
+    }
   }
 }

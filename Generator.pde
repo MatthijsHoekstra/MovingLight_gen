@@ -1,6 +1,6 @@
 class Generator {
   //------------------------------------------------------------All effects
-  ArrayList<Pulse> pulses = new ArrayList<Pulse>();
+  ArrayList<Effect> effects = new ArrayList<Effect>();
 
   //------------------------------------------------------------All variables
   int id;
@@ -20,16 +20,20 @@ class Generator {
   }
 
   void update() {
+    pushMatrix();
+    
+    translate(locationGenerator[id].x, locationGenerator[id].y);
+    
     for (int i = 0; i < pulses.size(); i++){
       Pulse pulse = pulses.get(i);
       
       pulse.update();
     }
+    
+    popMatrix();
   }
 
-  void addPulse(int duration, int distance_) {
-    int distance = getLength(distance_); //Going from percentage to actual pixel length
-    
+  void addPulse(int duration, int distance) { 
     pulses.add(new Pulse(direction, duration, distance));
   }
 }
