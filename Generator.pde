@@ -21,19 +21,19 @@ class Generator {
 
   void update() {
     pushMatrix();
-    
+
     translate(locationGenerator[id].x, locationGenerator[id].y);
-    
-    for (int i = 0; i < pulses.size(); i++){
+
+    for (int i = 0; i < pulses.size(); i++) {
       Pulse pulse = pulses.get(i);
-      
+
       pulse.update();
-      
-      if (pulse.finished){
-       pulses.remove(i); 
+
+      if (pulse.finished) {
+        pulses.remove(i);
       }
     }
-    
+
     popMatrix();
   }
 

@@ -41,17 +41,17 @@ void setup() {
   size(600, 630);
 
   mapping = loadImage("data/mapping.png");
-  
+
   //Creating all generators
 
   generator = new Generator[nGenerators];
-  
+
   for (int i = 0; i < nGenerators; i++) {
     generator[i] = new Generator(i);
   }
 
   createGrid();
-   
+
   //println(lengthTunnel);
 
   Ani.init(this);
@@ -67,18 +67,16 @@ void draw() {
   for (int i = 0; i < generator.length; i++) {
     generator[i].update();
   }
-  
+
   utility();
-  
+
   createVirtualTunnels();
 
   if (frameCount % 30 == 0) {
-   // println("adding pulses");
+    // println("adding pulses");
 
     for (int i = 0; i < nGenerators; i++) {
       generator[i].addPulse(1, FULL_LENGTH_TUNNEL);
     }
   }
-  
-  
 }

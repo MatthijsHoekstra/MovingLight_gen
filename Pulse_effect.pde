@@ -2,7 +2,7 @@ class Pulse {
   int direction, duration, distance;
 
   int x, y;
-  
+
   boolean finished = false;
 
   Pulse(int direction_, int duration_, int distance_) {
@@ -25,8 +25,8 @@ class Pulse {
     fill(255);
     rect(x, y, 10, widthLEDStrip);
   }
-  
-  void finished(){
-    finished = true; 
+
+  void finished() {
+    finished = true;
   }
 }

@@ -49,7 +49,7 @@ void createGrid() {
       locationVirtualTunnels[i].y = widthOuterTunnel + ((i - 4) * widthLEDStrip * 2) + widthLEDStrip;
     }
 
-    //TODO make array location projected Tunnels.
+    //TODO make 
 
     locationProjectedTunnels[i].x = i * 70;
     locationProjectedTunnels[i].y = 0;
