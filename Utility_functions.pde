@@ -6,7 +6,7 @@ PVector[] locationProjectedTunnels = new PVector[8];
 
 void createGrid() {  
 
-  
+
   //Create grid for the position of each tunnel
   for (int i = 0; i < nGenerators; i++) {
     locationGenerator[i] = new PVector();
@@ -20,25 +20,38 @@ void createGrid() {
       locationGenerator[i].y = widthOuterTunnel + ((i - 8) * widthLEDStrip);
     }
 
-    println(locationGenerator[i].x + " , " + locationGenerator[i].y);
+    //println(locationGenerator[i].x + " , " + locationGenerator[i].y);
   }
 
   //Create grid for the position of all the virtual tunnels
   for (int i = 0; i < 8; i++) {
     locationVirtualTunnels[i] = new PVector();
-    
+
     locationProjectedTunnels[i] = new PVector();
 
-    if (i < 4) {
+    if (i < 2) {
       locationVirtualTunnels[i].x = widthOuterTunnel + lengthTunnel - widthLEDStrip; 
+
       locationVirtualTunnels[i].y = widthOuterTunnel + (i * widthLEDStrip * 2);
     }
-    if (i >= 4 && i < 8) {
+
+    if (i >= 2 && i < 4) {
+      locationVirtualTunnels[i].x = widthOuterTunnel + lengthTunnel - widthLEDStrip; 
+
+      locationVirtualTunnels[i].y = widthOuterTunnel + (i * widthLEDStrip * 2) + widthLEDStrip;
+    }
+    if (i >= 4 && i < 6) {
       locationVirtualTunnels[i].x = widthOuterTunnel + (lengthTunnel * 2); 
       locationVirtualTunnels[i].y = widthOuterTunnel + ((i - 4) * widthLEDStrip * 2);
     }
-    
-    locationProjectedTunnels[i].x = i * 40;
+    if (i >= 6 && i < 8) {
+      locationVirtualTunnels[i].x = widthOuterTunnel + (lengthTunnel * 2); 
+      locationVirtualTunnels[i].y = widthOuterTunnel + ((i - 4) * widthLEDStrip * 2) + widthLEDStrip;
+    }
+
+    //TODO make array location projected Tunnels.
+
+    locationProjectedTunnels[i].x = i * 70;
     locationProjectedTunnels[i].y = 0;
   }
 }

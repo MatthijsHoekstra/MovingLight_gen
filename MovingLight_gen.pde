@@ -52,7 +52,7 @@ void setup() {
 
   createGrid();
    
-  println(lengthTunnel);
+  //println(lengthTunnel);
 
   Ani.init(this);
 }
