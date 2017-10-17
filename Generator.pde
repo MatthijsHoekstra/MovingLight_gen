@@ -1,6 +1,6 @@
 class Generator {
   //------------------------------------------------------------All effects
-  ArrayList<Effect> effects = new ArrayList<Effect>();
+  ArrayList<Pulse> pulses = new ArrayList<Pulse>();
 
   //------------------------------------------------------------All variables
   int id;
@@ -28,6 +28,10 @@ class Generator {
       Pulse pulse = pulses.get(i);
       
       pulse.update();
+      
+      if (pulse.finished){
+       pulses.remove(i); 
+      }
     }
     
     popMatrix();
