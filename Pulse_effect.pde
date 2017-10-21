@@ -8,7 +8,12 @@ class Pulse {
   Pulse(int direction_, int duration_, int distance_) {
     direction = direction_;
     duration = duration_;
-    distance = getLength(distance_);
+
+    if (direction == LEFT_RIGHT || direction == RIGHT_LEFT) {
+      distance = getLength(distance_ , 0);
+    } else if (direction == UP_DOWN || direction == DOWN_UP) {
+      distance = getLength(distance_, 1);
+    }
 
     if (direction == LEFT_RIGHT) {
       Ani.to(this, duration, "x", distance, Ani.QUAD_IN, "onEnd:finished");

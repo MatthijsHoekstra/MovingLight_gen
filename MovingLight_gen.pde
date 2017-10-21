@@ -43,7 +43,7 @@ static final int QUARTER_LENGTH = 25;
 void setup() {
 
   size(600, 630);
-  
+
   smooth(0);
 
   mapping = loadImage("data/mapping.png");
@@ -64,8 +64,10 @@ void setup() {
 
   udp = new UDP( this, 6000 );
   udp.listen( true );
-  
+
   noStroke();
+
+  generator[0].addRoundParticlePulse(2, FULL_LENGTH_TUNNEL);
 }
 
 void draw() {
@@ -85,11 +87,11 @@ void draw() {
 
   createVirtualTunnels();
 
-  if (frameCount % 30 == 0) {
-    // println("adding pulses");
+  //if (frameCount % 30 == 0) {
+  //  // println("adding pulses");
 
-    for (int i = 0; i < nGenerators; i++) {
-      generator[i].addPulse(2, FULL_LENGTH_TUNNEL);
-    }
-  }
+  //  for (int i = 0; i < nGenerators; i++) {
+  //    generator[i].addRoundParticlePulse(2, FULL_LENGTH_TUNNEL);
+  //  }
+  //}
 }

@@ -70,8 +70,13 @@ void utility() {
   surface.setTitle(int(frameRate) + " fps");
 }
 
-int getLength(int percentageLength) {
-  int interLength = int((percentageLength / 100.0) * lengthTunnel);
+int getLength(int percentageLength, int direction) {
+  int interLength = 0;
+  if (direction == 0) {
+    interLength = int((percentageLength / 100.0) * lengthTunnel);
+  } else if (direction == 1) {
+    interLength = int((constrain(percentageLength, 0, 100) / 100.0) * widthLEDStrip * 4);
+  }
   return interLength;
 }
 

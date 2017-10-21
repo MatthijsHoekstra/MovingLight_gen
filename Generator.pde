@@ -1,6 +1,7 @@
 class Generator {
   //------------------------------------------------------------All effects
   ArrayList<Pulse> pulses = new ArrayList<Pulse>();
+  ArrayList<RoundParticlePulse> roundParticlePulses = new ArrayList<RoundParticlePulse>();
 
   //------------------------------------------------------------All variables
   int id;
@@ -12,14 +13,11 @@ class Generator {
 
     if (id >= 0 && id <= 7) {
       direction = LEFT_RIGHT;
-    } 
-    else if (id >= 8 && id <= 15) {
+    } else if (id >= 8 && id <= 15) {
       direction = RIGHT_LEFT;
-    }
-    else if (id >= 16 && id <= 18) {
+    } else if (id >= 16 && id <= 18) {
       direction = UP_DOWN;
-    }
-    else if (id >= 19 && id <= 21) {
+    } else if (id >= 19 && id <= 21) {
       direction = DOWN_UP;
     }
   }
@@ -39,10 +37,24 @@ class Generator {
       }
     }
 
+    for (int i = 0; i < roundParticlePulses.size(); i++) {
+      RoundParticlePulse roundParticlePulse = roundParticlePulses.get(i);
+
+      roundParticlePulse.update();
+
+      if (roundParticlePulse.finished) {
+        roundParticlePulses.remove(i);
+      }
+    }
+
     popMatrix();
   }
 
   void addPulse(int duration, int distance_) { 
     pulses.add(new Pulse(direction, duration, distance_));
+  }
+
+  void addRoundParticlePulse(int duration, int distance_) { 
+    roundParticlePulses.add(new RoundParticlePulse(direction, duration, distance_));
   }
 }
