@@ -64,7 +64,8 @@ void utility() {
 }
 
 int getLength(int percentageLength) {
-  return int((percentageLength / 100) * lengthTunnel);
+  int interLength = int((percentageLength / 100.0) * lengthTunnel);
+  return interLength;
 }
 
 //int getPosition(

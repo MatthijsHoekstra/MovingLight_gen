@@ -1,22 +1,22 @@
 import de.looksgood.ani.*; //<>//
 import de.looksgood.ani.easing.*;
 
+import hypermedia.net.*;
+
 // http://multiply.org/processing/ -- timed events -- TODO?
-
-
 
 
 //------------------ Genral, changable variables ------
 
 int pixelSize = 2; //Determines how many pixels on the screen define 1 pixel on LED strip
 
-boolean helpGrid = false;
+boolean helpGrid = true;
 
 //-----------------------------------------------------
 
 int widthOuterTunnel = 37 * pixelSize;
 
-int lengthTunnel = int(pixelSize * 75);
+int lengthTunnel = pixelSize * 75;
 
 int widthLEDStrip = 30 * pixelSize;
 
@@ -25,6 +25,8 @@ final static int nGenerators = 16;
 Generator[] generator;
 
 PImage mapping;
+
+UDP udp;
 
 static final int LEFT_RIGHT = 0;
 static final int RIGHT_LEFT = 1;
@@ -55,9 +57,13 @@ void setup() {
   //println(lengthTunnel);
 
   Ani.init(this);
+
+  udp = new UDP( this, 6000 );
+  udp.listen( true );
 }
 
 void draw() {
+  
   background(0);
 
   if (helpGrid) {

@@ -37,7 +37,7 @@ class Generator {
     popMatrix();
   }
 
-  void addPulse(int duration, int distance) { 
-    pulses.add(new Pulse(direction, duration, distance));
+  void addPulse(int duration, int distance_) { 
+    pulses.add(new Pulse(direction, duration, distance_));
   }
 }
