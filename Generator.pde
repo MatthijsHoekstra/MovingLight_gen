@@ -10,12 +10,17 @@ class Generator {
   Generator(int id) {
     this.id = id;
 
-    if (id >= 0 && id < 8) {
+    if (id >= 0 && id <= 7) {
       direction = LEFT_RIGHT;
-    }
-
-    if (id > 7 && id < 16) {
+    } 
+    else if (id >= 8 && id <= 15) {
       direction = RIGHT_LEFT;
+    }
+    else if (id >= 16 && id <= 18) {
+      direction = UP_DOWN;
+    }
+    else if (id >= 19 && id <= 21) {
+      direction = DOWN_UP;
     }
   }
 

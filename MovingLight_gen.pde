@@ -10,7 +10,7 @@ import hypermedia.net.*;
 
 int pixelSize = 2; //Determines how many pixels on the screen define 1 pixel on LED strip
 
-boolean helpGrid = true;
+boolean helpGrid = false;
 
 //-----------------------------------------------------
 
@@ -20,7 +20,7 @@ int lengthTunnel = pixelSize * 75;
 
 int widthLEDStrip = 30 * pixelSize;
 
-final static int nGenerators = 16;
+final static int nGenerators = 22;
 
 Generator[] generator;
 
@@ -30,6 +30,8 @@ UDP udp;
 
 static final int LEFT_RIGHT = 0;
 static final int RIGHT_LEFT = 1;
+static final int UP_DOWN = 2;
+static final int DOWN_UP = 3;
 
 static final int FULL_LENGTH_TUNNEL = 150;
 static final int FULL_LENGTH = 100;
@@ -41,6 +43,8 @@ static final int QUARTER_LENGTH = 25;
 void setup() {
 
   size(600, 630);
+  
+  smooth(0);
 
   mapping = loadImage("data/mapping.png");
 
@@ -60,11 +64,14 @@ void setup() {
 
   udp = new UDP( this, 6000 );
   udp.listen( true );
+  
+  noStroke();
 }
 
 void draw() {
-  
-  background(0);
+  //Blur canvas
+  fill(0, 50); // semi-transparent white
+  rect(0, 0, width, height);
 
   if (helpGrid) {
     image(mapping, 0, 0);
@@ -82,7 +89,7 @@ void draw() {
     // println("adding pulses");
 
     for (int i = 0; i < nGenerators; i++) {
-      generator[i].addPulse(1, FULL_LENGTH_TUNNEL);
+      generator[i].addPulse(2, FULL_LENGTH_TUNNEL);
     }
   }
 }

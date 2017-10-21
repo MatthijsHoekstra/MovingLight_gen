@@ -14,10 +14,15 @@ void createGrid() {
     if (i < 8) {
       locationGenerator[i].x = widthOuterTunnel; 
       locationGenerator[i].y = widthOuterTunnel + (i * widthLEDStrip);
-    }
-    if (i >= 8 && i < 16) {
+    } else if (i >= 8 && i < 16) {
       locationGenerator[i].x = widthOuterTunnel + (3 * lengthTunnel);
       locationGenerator[i].y = widthOuterTunnel + ((i - 8) * widthLEDStrip);
+    } else if (i >= 16 && i <= 18) {
+      locationGenerator[i].x = widthOuterTunnel + ((i - 16) * lengthTunnel);
+      locationGenerator[i].y = widthOuterTunnel;
+    } else if (i >= 19 && i <= 21) {
+      locationGenerator[i].x = widthOuterTunnel + ((i - 19) * lengthTunnel);
+      locationGenerator[i].y = widthOuterTunnel + (widthLEDStrip*8);
     }
 
     //println(locationGenerator[i].x + " , " + locationGenerator[i].y);
@@ -61,6 +66,8 @@ void utility() {
   fill(200, 0, 100);
   text(int(frameRate), 5, 16);
   popStyle();
+
+  surface.setTitle(int(frameRate) + " fps");
 }
 
 int getLength(int percentageLength) {

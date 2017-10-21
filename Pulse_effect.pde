@@ -18,12 +18,29 @@ class Pulse {
       Ani.to(this, duration, "x", -distance, Ani.QUAD_IN, "onEnd:finished");
     }
 
+    if (direction == UP_DOWN) {
+      Ani.to(this, duration, "y", distance, Ani.QUAD_IN, "onEnd:finished");
+    }
+
+    if (direction == DOWN_UP) {
+      Ani.to(this, duration, "y", -distance, Ani.QUAD_IN, "onEnd:finished");
+    }
+
     //println("pulse added : " + this.direction + " " + this.distance);
   }
 
   void update() {
+    pushStyle();
+    //filter(BLUR);
     fill(255);
-    rect(x, y, 10, widthLEDStrip);
+
+    if (direction == LEFT_RIGHT || direction == RIGHT_LEFT) {
+      rect(x, y, 10, widthLEDStrip);
+    }
+    if (direction == UP_DOWN || direction == DOWN_UP) {
+      rect(x, y, lengthTunnel, 10);
+    }
+    popStyle();
   }
 
   void finished() {
