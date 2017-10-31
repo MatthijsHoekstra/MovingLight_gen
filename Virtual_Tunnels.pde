@@ -9,9 +9,6 @@ void createVirtualTunnels() {
   //}
 
   loadPixels();
-
-
-
   for (int n = 0; n < 8; n++) {
     int xVirtualTunnel = int(locationVirtualTunnels[n].x);
     int yVirtualTunnel = int(locationVirtualTunnels[n].y);
