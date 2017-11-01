@@ -1,3 +1,8 @@
+import java.net.URL;
+import java.net.HttpURLConnection;
+import java.io.OutputStreamWriter;
+import java.io.InputStreamReader;
+
 PVector[] locationGenerator = new PVector[nGenerators];
 
 PVector[] locationVirtualTunnels = new PVector[8];
@@ -80,36 +85,19 @@ int getLength(int percentageLength, int direction) {
   return interLength;
 }
 
-void sendStatus() {
-  //println("send Status Show");
-  if (ipStatusServer.equals("localhost") == false) {
-    try {
-      PostRequest post = new PostRequest(ipStatusServer);
-      post.addData("type", "interactive_cycle");
-      post.addData("timestamp", year() + "-" + month() + "-" + day() + "T" + hour() + ":" + minute() + ":" + second()); //TODO Time
-      post.addData("payload", "kinect_1/0/kinect_2/1/kinect_3/0/kinect_4/1"); //0 not working, 1 working
-      post.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-      post.send();
-    }
-    catch(Exception e) {
-      println("JSON f*cked up. Wonderful. (Error: sendStatus");
-    }
-  }
-}
-
 void getStatus() {
-  //println("get Status Show");
-  if (ipStatusServer.equals("localhost") == false) {
-    try {
-      GetRequest get = new GetRequest("http://httprocessing.heroku.com");
-      get.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-      get.send();
+  ////println("get Status Show");
+  //if (ipStatusServer.equals("localhost") == false) {
+  //  try {
+  //    GetRequest get = new GetRequest("http://httprocessing.heroku.com");
+  //    get.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+  //    get.send();
 
-      println("Reponse Content: " + get.getContent());
-    }
-    catch(Exception e) {
-      println("JSON f*cked up. Wonderful. (Error: getStatus)");
-    }
-  }
+  //    println("Reponse Content: " + get.getContent());
+  //  }
+  //  catch(Exception e) {
+  //    println("JSON f*cked up. Wonderful. (Error: getStatus)");
+  //  }
+  //}
 }
 //int getPosition(

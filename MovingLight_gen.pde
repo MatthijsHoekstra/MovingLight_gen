@@ -1,4 +1,10 @@
-import de.looksgood.ani.*; //<>//
+//TODO //<>//
+
+//ADD boolean check for the status of the kinects, publish to overview
+//ADD status show, are we running? Do we rerun? What is the show doing? Depends on messages that are received
+//ADD the correct json format within the socket created, waiting for correct names @Sander
+
+import de.looksgood.ani.*;
 import de.looksgood.ani.easing.*;
 
 import hypermedia.net.*;
@@ -8,6 +14,12 @@ import processing.net.*;
 import http.requests.*;
 import org.multiply.processing.TimedEventGenerator;
 
+import http.*;
+import java.util.Map;
+
+SimpleHTTPServer server;
+DynamicResponseHandler responder1, responder2;
+
 private TimedEventGenerator statusOutTimer;
 private TimedEventGenerator statusInTimer;
 
@@ -16,15 +28,17 @@ private TimedEventGenerator statusInTimer;
 
 //------------------ Genral, changable variables ------
 
-int pixelSize = 2; //Determines how many pixels on the screen define 1 pixel on LED strip
+int pixelSize = 2; //Determines how many pixels on the screen define 1 pixel on LED strip //Can be used for optimalization later on
 
 boolean helpGrid = false;
 
 int udpPort = 5883;
 
-String ipStatusServer = "localhost";
+String OVERVIEW_SERVER_IP = "12.0.0.38";
+String OVERVIEW_SERVER_PORT = "4444";
 
-String ntpHost = "localhost";
+final int HTTP_SERVER_PORT = 8000;
+
 
 //-----------------------------------------------------
 
@@ -52,6 +66,10 @@ static final int FULL_LENGTH = 100;
 static final int THREE_QUARTER_LENGTH = 75;
 static final int HALF_LENGTH = 50;
 static final int QUARTER_LENGTH = 25;
+
+final String JSON_CONTENT_TYPE = "application/json";
+
+//Test server;
 
 
 void setup() {
@@ -84,15 +102,16 @@ void setup() {
   generator[0].addRoundParticlePulse(2, FULL_LENGTH_TUNNEL);
 
   statusOutTimer = new TimedEventGenerator(this, "sendStatus", false);
-  statusOutTimer.setIntervalMs(2000);
+  statusOutTimer.setIntervalMs(10000);
   statusOutTimer.setEnabled(true);
 
-  statusOutTimer = new TimedEventGenerator(this, "getStatus", false);
-  statusOutTimer.setIntervalMs(100);
-  statusOutTimer.setEnabled(true);
+  startWebServices();
+  
+  
 }
 
 void draw() {
+
   //Blur canvas
   fill(0, 50); // semi-transparent white
   rect(0, 0, width, height);
@@ -110,7 +129,7 @@ void draw() {
   createVirtualTunnels();
 
   if (frameCount % 30 == 0) {
-     println("adding pulses");
+    //println("adding pulses");
 
     for (int i = 0; i < nGenerators; i++) {
       generator[i].addPulse(2, FULL_LENGTH_TUNNEL);
