@@ -34,8 +34,8 @@ boolean helpGrid = false;
 
 int udpPort = 5883;
 
-String OVERVIEW_SERVER_IP = "12.0.0.38";
-String OVERVIEW_SERVER_PORT = "4444";
+String OVERVIEW_SERVER_IP = "10.0.2.50";
+String OVERVIEW_SERVER_PORT = "5500";
 
 final int HTTP_SERVER_PORT = 8000;
 
@@ -102,7 +102,7 @@ void setup() {
   generator[0].addRoundParticlePulse(2, FULL_LENGTH_TUNNEL);
 
   statusOutTimer = new TimedEventGenerator(this, "sendStatus", false);
-  statusOutTimer.setIntervalMs(10000);
+  statusOutTimer.setIntervalMs(5000);
   statusOutTimer.setEnabled(true);
 
   startWebServices();

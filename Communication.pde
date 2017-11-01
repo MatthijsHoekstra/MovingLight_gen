@@ -39,16 +39,16 @@ class TextResponse extends ResponseBuilder {
 }
 
 //------------------------------------------------------------------------------------SEND STATUS TO OVERVIEW PANEL
-boolean stateKinect[] = new boolean[4];
+String stateKinect[] = new String[4];
 
 void sendStatus() {
   try {
-    stateKinect[0] = true;
-    stateKinect[1] = true;
-    stateKinect[2] = false;
-    stateKinect[3] = true;
+    stateKinect[0] = "OK";
+    stateKinect[1] = "OK";
+    stateKinect[2] = "CRITICAL";
+    stateKinect[3] = "OK";
 
-    URL url = new URL("http://12.0.0.38:4444");
+    URL url = new URL("http://"+OVERVIEW_SERVER_IP+":"+OVERVIEW_SERVER_PORT+"/events");
     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
     connection.setConnectTimeout(5000);//5 secs
     connection.setReadTimeout(5000);//5 secs
@@ -57,15 +57,16 @@ void sendStatus() {
     connection.setDoOutput(true);
     connection.setRequestProperty("Content-Type", "application/json");
 
-    String time = year() + "-" + month() + "-" + day() + "-T" + hour() + ":"+ minute() + ":" + second();
-    
+    String time = year() + "-" + month() + "-" + day() + "T" + hour() + ":"+ minute() + ":" + second();
+
     String stateShow = "running";
 
     OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());  
     out.write(
-      "{\"type\"\"interactive_cycle\",\"timestamp\":\""
+
+      "{\"type\":\"interactive_cycle\",\"timestamp\":\""
       +time+
-      ",\"payload\":\"{\"state_kinect_0\":"
+      "\",\"payload\":{\"state_kinect_0\":"
       +int(stateKinect[0])+
       ",\"state_kinect_1\":"
       +int(stateKinect[1])+
@@ -93,6 +94,6 @@ void sendStatus() {
   }
   catch(Exception e) {
     //e.printStackTrace();
-    println("JSON f*cked up. Wonderful. (Error: sendStatus");
+    println("JSON f*cked up. Wonderful. (Error: sendStatus)");
   }
 }
