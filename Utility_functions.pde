@@ -10,8 +10,6 @@ PVector[] locationVirtualTunnels = new PVector[8];
 PVector[] locationProjectedTunnels = new PVector[8];
 
 void createGrid() {  
-
-
   //Create grid for the position of each tunnel
   for (int i = 0; i < nGenerators; i++) {
     locationGenerator[i] = new PVector();
@@ -101,3 +99,134 @@ void getStatus() {
   //}
 }
 //int getPosition(
+
+PShape angularRect;
+
+void createShapes() {
+  angularRect = createShape();
+  angularRect.beginShape();
+  angularRect.fill(255);
+  angularRect.noStroke();
+  angularRect.vertex(15, 0);
+  angularRect.vertex(0, widthLEDStrip);
+  angularRect.vertex(20, widthLEDStrip);
+  angularRect.vertex(35, 0);
+  angularRect.endShape(CLOSE); 
+}
+
+void keyPressed() {
+  if (key == '1') {
+    kinectHeight[0] += 0.1;
+    println("kinect 1 Height = " + kinectHeight[0]);
+  }
+  if (key == '2') {
+    kinectHeight[0] -= 0.1;
+    println("kinect 1 Height = " + kinectHeight[0]);
+  }
+  if (key == '3') {
+    kinectHeight[1] += 0.1;
+    println("kinect 2 Height = " + kinectHeight[1]);
+  }
+  if (key == '4') {
+    kinectHeight[1] -= 0.1;
+    println("kinect 2 Height = " + kinectHeight[1]);
+  }
+  if (key == '5') {
+    kinectHeight[2] += 0.1;
+    println("kinect 3 Height = " + kinectHeight[2]);
+  }
+  if (key == '6') {
+    kinectHeight[2] -= 0.1;
+    println("kinect 3 Height = " + kinectHeight[2]);
+  }
+  if (key == '7') {
+    kinectHeight[3] += 0.1;
+    println("kinect 4 Height = " + kinectHeight[3]);
+  }
+  if (key == '8') {
+    kinectHeight[3] -= 0.1;
+    println("kinect 4 Height = " + kinectHeight[3]);
+  }
+  if (key == 'q') {
+    kinectCrowd[0] += 0.1;
+    println("kinect 1 Crowd = " + kinectCrowd[0]);
+  }
+  if (key == 'w') {
+    kinectCrowd[0] -= 0.1;
+    println("kinect 1 Crowd = " + kinectCrowd[0]);
+  }
+  if (key == 'e') {
+    kinectCrowd[1] += 0.1;
+    println("kinect 2 Crowd = " + kinectCrowd[1]);
+  }
+  if (key == 'r') {
+    kinectCrowd[1] -= 0.1;
+    println("kinect 2 Crowd = " + kinectCrowd[1]);
+  }
+  if (key == 't') {
+    kinectCrowd[2] += 0.1;
+    println("kinect 3 Crowd = " + kinectCrowd[2]);
+  }
+  if (key == 'y') {
+    kinectCrowd[2] -= 0.1;
+    println("kinect 3 Crowd = " + kinectCrowd[2]);
+  }
+  if (key == 'u') {
+    kinectCrowd[3] += 0.1;
+    println("kinect 4 Crowd = " + kinectCrowd[3]);
+  }
+  if (key == 'i') {
+    kinectCrowd[3] -= 0.1;
+    println("kinect 4 Crowd = " + kinectCrowd[3]);
+  }
+  if (keyCode == UP) {
+    for (int i = 0; i < 4; i++) {
+      activationTimeRipple[i] = true;
+    }
+    timeRipplePulseTimer.setEnabled(!timeRipplePulseTimer.isEnabled());
+  }
+  if (keyCode == DOWN) {
+    for (int i = 0; i < 4; i++) {
+      activationGravityWave[i] = true;
+    }
+    gravityWavePulseTimer.setEnabled(!timeRipplePulseTimer.isEnabled());
+  }
+}
+
+color[][] colorsVirtualTunnels = new color[8][int(pow(widthLEDStrip, 2))];
+
+void createVirtualTunnels() {
+
+  // Uncomment for seeing locations of the projected and virtual tunnels
+  //fill(255, 0, 0, 100);
+  //for (int n = 0; n < 8; n++) {
+  //  rect(locationVirtualTunnels[n].x, locationVirtualTunnels[n].y, 60, 60);
+  //}
+
+  loadPixels();
+  for (int n = 0; n < 8; n++) {
+    int xVirtualTunnel = int(locationVirtualTunnels[n].x);
+    int yVirtualTunnel = int(locationVirtualTunnels[n].y);
+
+    int xProjectedTunnel = int(locationProjectedTunnels[n].x);
+    int yProjectedTunnel = int(locationProjectedTunnels[n].y);
+
+    for (int x = 0; x < widthLEDStrip; x++) {
+      for (int y = 0; y < widthLEDStrip; y++) {
+
+        int locationProjectedPixel = (xProjectedTunnel + x) + (yProjectedTunnel+y) * width;
+        int locationVirtualPixel = (xVirtualTunnel + x) + (yVirtualTunnel+y) * width;
+        // println(locationProjectedPixel);
+
+        //if (red(colorPixel) != 0 && green(colorPixel) != 0 && blue(colorPixel) != 0) {
+        pixels[locationProjectedPixel] = pixels[locationVirtualPixel];
+
+        //} else {
+        //continue;
+        //}
+      }
+    }
+  }
+
+  updatePixels();
+}

@@ -1,8 +1,9 @@
 class Generator {
   //------------------------------------------------------------All effects
-  ArrayList<Pulse> pulses = new ArrayList<Pulse>();
-  ArrayList<RoundParticlePulse> roundParticlePulses = new ArrayList<RoundParticlePulse>();
-
+  ArrayList<timeRipplePulse> timeRipplePulses = new ArrayList<timeRipplePulse>();
+  ArrayList<timeRipple> timeRipples = new ArrayList<timeRipple>();
+  ArrayList<gravityWavePulse> gravityWavePulses = new ArrayList<gravityWavePulse>();
+  ArrayList<gravityWave> gravityWaves = new ArrayList<gravityWave>();
   //------------------------------------------------------------All variables
   int id;
 
@@ -27,34 +28,62 @@ class Generator {
 
     translate(locationGenerator[id].x, locationGenerator[id].y);
 
-    for (int i = 0; i < pulses.size(); i++) {
-      Pulse pulse = pulses.get(i);
+    for (int i = 0; i < timeRipplePulses.size(); i++) {
+      timeRipplePulse timeRipplePulse = timeRipplePulses.get(i);
 
-      pulse.update();
+      timeRipplePulse.update();
 
-      if (pulse.finished) {
-        pulses.remove(i);
+      if (timeRipplePulse.finished) {
+        timeRipplePulses.remove(i);
       }
     }
+    
+    for (int i = 0; i < timeRipples.size(); i++) {
+      timeRipple timeRipple = timeRipples.get(i);
 
-    for (int i = 0; i < roundParticlePulses.size(); i++) {
-      RoundParticlePulse roundParticlePulse = roundParticlePulses.get(i);
+      timeRipple.update();
 
-      roundParticlePulse.update();
+      if (timeRipple.finished) {
+        timeRipples.remove(i);
+      }
+    }
+    
+    for (int i = 0; i < gravityWavePulses.size(); i++) {
+      gravityWavePulse gravityWavesPulse = gravityWavePulses.get(i);
 
-      if (roundParticlePulse.finished) {
-        roundParticlePulses.remove(i);
+      gravityWavesPulse.update();
+
+      if (gravityWavesPulse.finished) {
+        gravityWavePulses.remove(i);
+      }
+    }
+    
+    for (int i = 0; i < gravityWaves.size(); i++) {
+      gravityWave gravityWave = gravityWaves.get(i);
+
+      gravityWave.update();
+
+      if (gravityWave.finished) {
+        gravityWaves.remove(i);
       }
     }
 
     popMatrix();
   }
 
-  void addPulse(int duration, int distance_) { 
-    pulses.add(new Pulse(direction, duration, distance_));
+  void addTimeRipplePulse(int duration, int distance_) { 
+    timeRipplePulses.add(new timeRipplePulse(direction, duration, distance_));
   }
-
-  void addRoundParticlePulse(int duration, int distance_) { 
-    roundParticlePulses.add(new RoundParticlePulse(direction, duration, distance_));
+  
+  void addTimeRipple(int duration, int distance_, int size, int position) { 
+    timeRipples.add(new timeRipple(direction, duration, distance_, size, position));
+  }
+  
+  void addGravityWavePulse(int duration, int distance_) { 
+    gravityWavePulses.add(new gravityWavePulse(direction, duration, distance_));
+  }
+  
+  void addGravityWave(int duration_, int depth_, int size_, int startPosition_) { 
+    gravityWaves.add(new gravityWave(direction, duration_, depth_, size_, startPosition_));
   }
 }

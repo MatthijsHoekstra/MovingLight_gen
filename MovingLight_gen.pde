@@ -21,10 +21,8 @@ SimpleHTTPServer server;
 DynamicResponseHandler responder1, responder2;
 
 private TimedEventGenerator statusOutTimer;
-private TimedEventGenerator statusInTimer;
-
-
-// http://multiply.org/processing/ -- timed events -- TODO
+private TimedEventGenerator timeRipplePulseTimer;
+private TimedEventGenerator gravityWavePulseTimer;
 
 //------------------ Genral, changable variables ------
 
@@ -69,8 +67,13 @@ static final int QUARTER_LENGTH = 25;
 
 final String JSON_CONTENT_TYPE = "application/json";
 
-//Test server;
+float[] kinectHeight = new float[4];
+float[] kinectCrowd = new float[4];
+float[] kinectChaos = new float[4];
 
+boolean activationMonitor = true;
+boolean[] activationTimeRipple = new boolean[4];
+boolean[] activationGravityWave = new boolean[4];
 
 void setup() {
 
@@ -93,21 +96,30 @@ void setup() {
   //println(lengthTunnel);
 
   Ani.init(this);
+  Ani.setDefaultTimeMode(Ani.FRAMES);
 
   udp = new UDP( this, udpPort );
   udp.listen( true );
 
   noStroke();
 
-  generator[0].addRoundParticlePulse(2, FULL_LENGTH_TUNNEL);
+  //generator[0].addRoundParticlePulse(2, FULL_LENGTH_TUNNEL);
 
   statusOutTimer = new TimedEventGenerator(this, "sendStatus", false);
   statusOutTimer.setIntervalMs(5000);
   statusOutTimer.setEnabled(true);
+  
+   timeRipplePulseTimer = new TimedEventGenerator(this, "timeRipplePulseActivated", false);
+  timeRipplePulseTimer.setIntervalMs(200);
+  timeRipplePulseTimer.setEnabled(true);
+  
+  gravityWavePulseTimer = new TimedEventGenerator(this, "gravityWavePulseActivated", false);
+  gravityWavePulseTimer.setIntervalMs(80);
+  gravityWavePulseTimer.setEnabled(true);
 
   startWebServices();
   
-  
+  createShapes();
 }
 
 void draw() {
@@ -127,12 +139,6 @@ void draw() {
   utility();
 
   createVirtualTunnels();
-
-  if (frameCount % 30 == 0) {
-    //println("adding pulses");
-
-    for (int i = 0; i < nGenerators; i++) {
-      generator[i].addPulse(2, FULL_LENGTH_TUNNEL);
-    }
-  }
+  
+  summonEffects();
 }
