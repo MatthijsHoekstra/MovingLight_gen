@@ -14,11 +14,12 @@ class timeRipplePulse {
     distance = getLength(distance_ , 0);
     distance = getLength(distance_ , 0);
     
-    Ani.to(this, duration, "x", distance, Ani.QUAD_IN, "onEnd:finished");
+    Ani.to(this, duration, "x", distance - 20, Ani.QUAD_IN, "onEnd:finished");
   }
 
   void update() {
     pushStyle();
+    
     //filter(BLUR);
     fill(255);
     
