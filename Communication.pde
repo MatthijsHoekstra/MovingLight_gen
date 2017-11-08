@@ -86,7 +86,7 @@ void sendStatus() {
     connection.setRequestProperty("Content-Type", "application/json");
     
     OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());  
-    out.write(Integer.parseInt(status.toString()));
+    out.write(status.toString());
     out.flush();
     out.close();
 
@@ -104,7 +104,7 @@ void sendStatus() {
     //connection.disconnect();
   }
   catch(Exception e) {
-    //e.printStackTrace();
-    //println("JSON f*cked up. Wonderful. (Error: sendStatus)");
+    e.printStackTrace();
+    println("JSON f*cked up. Wonderful. (Error: sendStatus)");
   }
 }

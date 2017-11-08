@@ -27,8 +27,8 @@ void createGrid() {
     } else if (i >= 16 && i <= 18) {
       locationGenerator[i].x = widthOuterTunnel + ((i - 16) * lengthTunnel);
       locationGenerator[i].y = widthOuterTunnel;
-    } else if (i >= 19 && i <= 21) {
-      locationGenerator[i].x = widthOuterTunnel + ((i - 19) * lengthTunnel);
+    } else if (i >= 20 && i <= 22) {
+      locationGenerator[i].x = widthOuterTunnel + ((i - 20) * lengthTunnel);
       locationGenerator[i].y = widthOuterTunnel + (widthLEDStrip*8);
     }
 

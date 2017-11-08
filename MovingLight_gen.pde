@@ -116,12 +116,16 @@ void setup() {
   //generator[0].addRoundParticlePulse(2, FULL_LENGTH_TUNNEL);
 
   statusOutTimer = new TimedEventGenerator(this, "sendStatus", false);
-  statusOutTimer.setIntervalMs(5000);
+  statusOutTimer.setIntervalMs(1000);
   statusOutTimer.setEnabled(true);
 
   timeRipplePulseTimer = new TimedEventGenerator(this, "timeRipplePulseActivated", false);
   timeRipplePulseTimer.setIntervalMs(200);
   timeRipplePulseTimer.setEnabled(true);
+  
+  gravityWavePulseTimer = new TimedEventGenerator(this, "gravityWavePulseActivated", false);
+  gravityWavePulseTimer.setIntervalMs(200);
+  gravityWavePulseTimer.setEnabled(true);
 
   timeline_40 = new TimedEventGenerator(this, "prepareWormhole");
   timeline_40.setIntervalMs(40000);

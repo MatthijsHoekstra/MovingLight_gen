@@ -18,7 +18,7 @@ class Generator {
       direction = RIGHT_LEFT;
     } else if (id >= 16 && id <= 18) {
       direction = UP_DOWN;
-    } else if (id >= 19 && id <= 21) {
+    } else if (id >= 20 && id <= 22) {
       direction = DOWN_UP;
     }
   }
