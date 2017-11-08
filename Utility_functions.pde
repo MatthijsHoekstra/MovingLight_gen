@@ -1,13 +1,17 @@
-import java.net.URL;
+import java.net.URL; //<>// //<>// //<>//
 import java.net.HttpURLConnection;
 import java.io.OutputStreamWriter;
 import java.io.InputStreamReader;
 
 PVector[] locationGenerator = new PVector[nGenerators];
 
-PVector[] locationVirtualTunnels = new PVector[8];
+PVector[] locationVirtualTunnels = new PVector[4];
 
-PVector[] locationProjectedTunnels = new PVector[8];
+PVector[] locationProjectedTunnels = new PVector[4];
+
+PImage[] projectedTunnel = new PImage[4];
+
+
 
 void createGrid() {  
   //Create grid for the position of each tunnel
@@ -32,35 +36,34 @@ void createGrid() {
   }
 
   //Create grid for the position of all the virtual tunnels
-  for (int i = 0; i < 8; i++) {
+  for (int i = 0; i < locationVirtualTunnels.length; i++) {
     locationVirtualTunnels[i] = new PVector();
 
     locationProjectedTunnels[i] = new PVector();
 
+    locationVirtualTunnels[i].x = widthOuterTunnel + lengthTunnel - widthLEDStrip;
+
     if (i < 2) {
-      locationVirtualTunnels[i].x = widthOuterTunnel + lengthTunnel - widthLEDStrip; 
-
-      locationVirtualTunnels[i].y = widthOuterTunnel + (i * widthLEDStrip * 2);
+      locationVirtualTunnels[i].y = widthOuterTunnel + (i * 2 * widthLEDStrip);
+    } else if (i >=2 && i < 4) {
+      locationVirtualTunnels[i].y = widthOuterTunnel + ((i * 2 * widthLEDStrip) + widthLEDStrip);
     }
 
-    if (i >= 2 && i < 4) {
-      locationVirtualTunnels[i].x = widthOuterTunnel + lengthTunnel - widthLEDStrip; 
-
-      locationVirtualTunnels[i].y = widthOuterTunnel + (i * widthLEDStrip * 2) + widthLEDStrip;
+    if (i==0) {
+      locationProjectedTunnels[i].x = 0;
+      locationProjectedTunnels[i].y = 0;
+    } else if (i==1) {
+      locationProjectedTunnels[i].x = 0;
+      locationProjectedTunnels[i].y = 0;
+    } else if (i==2) {
+      locationProjectedTunnels[i].x = 0;
+      locationProjectedTunnels[i].y = 0;
+    } else if (i==3) {
+      locationProjectedTunnels[i].x = 0;
+      locationProjectedTunnels[i].y = 0;
     }
-    if (i >= 4 && i < 6) {
-      locationVirtualTunnels[i].x = widthOuterTunnel + (lengthTunnel * 2); 
-      locationVirtualTunnels[i].y = widthOuterTunnel + ((i - 4) * widthLEDStrip * 2);
-    }
-    if (i >= 6 && i < 8) {
-      locationVirtualTunnels[i].x = widthOuterTunnel + (lengthTunnel * 2); 
-      locationVirtualTunnels[i].y = widthOuterTunnel + ((i - 4) * widthLEDStrip * 2) + widthLEDStrip;
-    }
 
-    //TODO make 
-
-    locationProjectedTunnels[i].x = i * 70;
-    locationProjectedTunnels[i].y = 0;
+    projectedTunnel[i] = createImage((lengthTunnel + (widthLEDStrip * 2)), widthLEDStrip, ARGB);
   }
 }
 
@@ -183,50 +186,77 @@ void keyPressed() {
     for (int i = 0; i < 4; i++) {
       activationTimeRipple[i] = true;
     }
+    nextPulse = 0;
     timeRipplePulseTimer.setEnabled(!timeRipplePulseTimer.isEnabled());
   }
   if (keyCode == DOWN) {
     for (int i = 0; i < 4; i++) {
       activationGravityWave[i] = true;
     }
+    nextPulse = 0;
     gravityWavePulseTimer.setEnabled(!timeRipplePulseTimer.isEnabled());
   }
 }
+
 
 color[][] colorsVirtualTunnels = new color[8][int(pow(widthLEDStrip, 2))];
 
 void createVirtualTunnels() {
 
-  // Uncomment for seeing locations of the projected and virtual tunnels
-  //fill(255, 0, 0, 100);
-  //for (int n = 0; n < 8; n++) {
-  //  rect(locationVirtualTunnels[n].x, locationVirtualTunnels[n].y, 60, 60);
-  //}
-
-  loadPixels();
-  for (int n = 0; n < 8; n++) {
-    int xVirtualTunnel = int(locationVirtualTunnels[n].x);
-    int yVirtualTunnel = int(locationVirtualTunnels[n].y);
-
-    int xProjectedTunnel = int(locationProjectedTunnels[n].x);
-    int yProjectedTunnel = int(locationProjectedTunnels[n].y);
-
-    for (int x = 0; x < widthLEDStrip; x++) {
-      for (int y = 0; y < widthLEDStrip; y++) {
-
-        int locationProjectedPixel = (xProjectedTunnel + x) + (yProjectedTunnel+y) * width;
-        int locationVirtualPixel = (xVirtualTunnel + x) + (yVirtualTunnel+y) * width;
-        // println(locationProjectedPixel);
-
-        //if (red(colorPixel) != 0 && green(colorPixel) != 0 && blue(colorPixel) != 0) {
-        pixels[locationProjectedPixel] = pixels[locationVirtualPixel];
-
-        //} else {
-        //continue;
-        //}
-      }
-    }
+  //Uncomment for seeing locations of the projected and virtual tunnels
+  fill(255, 0, 0, 10);
+  for (int n = 0; n < 4; n++) {
+    rect(locationVirtualTunnels[n].x, locationVirtualTunnels[n].y, widthLEDStrip*2 + lengthTunnel, 60);
   }
 
-  updatePixels();
+  //for (int n = 0; n < 4; n++) {
+  //  rect(locationProjectedTunnels[n].x, locationProjectedTunnels[n].y, 30, 30);
+  //}
+  for (int n = 0; n < 4; n++) {
+    int xVirtual = int(locationVirtualTunnels[n].x);
+    int yVirtual = int(locationVirtualTunnels[n].y);
+    loadPixels();
+    projectedTunnel[n].loadPixels();
+    for (int x = 0; x < (lengthTunnel + (widthLEDStrip * 2)); x++) {
+      for (int y = 0; y < widthLEDStrip; y++) {
+
+        int pixelVirtual = (x + xVirtual) + (y + yVirtual) * width;
+        int pixelProjected = x + y * projectedTunnel[n].width;
+
+        projectedTunnel[n].pixels[pixelProjected] = pixels[pixelVirtual];
+      }
+    }
+
+    projectedTunnel[n].updatePixels();
+  }
+  //0
+  pushMatrix();
+
+  translate(widthOuterTunnel, 0);
+  image(projectedTunnel[0], 0, 0, lengthTunnel*3, widthOuterTunnel);
+
+  popMatrix();
+  //1
+  pushMatrix();
+  
+  translate(widthOuterTunnel + lengthTunnel*3 + widthLEDStrip + 20, 90);
+  rotate(radians(90));
+  image(projectedTunnel[1], 0, 0, lengthTunnel*3, widthOuterTunnel);
+
+  popMatrix();
+  //2
+  pushMatrix();
+  
+  translate(widthOuterTunnel + lengthTunnel*2 + widthLEDStrip + 93, widthLEDStrip*9+widthOuterTunnel + 15);
+  rotate(radians(180));
+  image(projectedTunnel[2], 0, 0, lengthTunnel*3, widthOuterTunnel);
+  popMatrix();
+  //3
+  pushMatrix();
+  
+  translate(0, 180+lengthTunnel + widthLEDStrip*2 + widthOuterTunnel + 14);
+  rotate(radians(270));
+  image(projectedTunnel[3], 0, 0, lengthTunnel*3, widthOuterTunnel);
+
+  popMatrix();
 }

@@ -31,12 +31,27 @@ class gravityWave {
     //filter(BLUR);
     fill(255, 240 - abs(y));
     
-    int yPos = y - startPosition;
+    if (direction == UP_DOWN) {
+      int yPos = y + startPosition;
     
-    if (yPos < -widthLEDStrip * 4) {
-      yPos += widthLEDStrip * 4;
+      if (yPos > widthLEDStrip * 4 - 10) {
+        yPos -= widthLEDStrip * 4;
+      }
+      
+      rect(x, yPos, waveSize, 10);
     }
-    rect(x, yPos, waveSize, 10);
+    
+    if (direction == DOWN_UP) {
+      int yPos = y - startPosition;
+    
+      if (yPos < -widthLEDStrip * 4) {
+        yPos += widthLEDStrip * 4;
+      }
+      
+      rect(x, yPos, waveSize, 10);
+    }
+    
+
     
     popStyle();
   }
