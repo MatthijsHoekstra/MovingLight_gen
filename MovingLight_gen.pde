@@ -87,19 +87,23 @@ boolean[] activationGravityWave = new boolean[4];
 
 Spout spout;
 
-int lastMillis;
+int millisStarted;
 
-int showModus;
+int showModus = 5;
 
 MidiBus myBusA;
 OscP5 oscP5;
 NetAddress myRemoteLocation;
+
+boolean[] executeOnce = new boolean[2];
 
 void setup() {
 
   size(600, 630, OPENGL);
 
   smooth(0);
+
+  frameRate(120);
 
   mapping = loadImage("data/mapping.png");
 
@@ -125,6 +129,16 @@ void setup() {
 
   //generator[0].addRoundParticlePulse(2, FULL_LENGTH_TUNNEL);
 
+  startWebServices();
+
+  createShapes();
+
+  spout = new Spout(this);
+
+  myBusA = new MidiBus(this, "LoopBe Internal MIDI", "LoopBe Internal MIDI", "busA");
+  oscP5 = new OscP5(this, 9001);
+  myRemoteLocation = new NetAddress("127.0.0.1", 9000);
+
   statusOutTimer = new TimedEventGenerator(this, "sendStatus", false);
   statusOutTimer.setIntervalMs(1000);
   statusOutTimer.setEnabled(true);
@@ -137,23 +151,16 @@ void setup() {
   gravityWavePulseTimer.setIntervalMs(200);
   gravityWavePulseTimer.setEnabled(true);
 
-  timeline_40 = new TimedEventGenerator(this, "prepareWormhole");
-  timeline_40.setIntervalMs(40000);
-  timeline_40.setEnabled(false);
+  //timeline_40 = new TimedEventGenerator(this, "prepareWormhole", false);
+  //timeline_40.setIntervalMs(40000);
+  //timeline_40.setEnabled(false);
 
-  timeline_47 = new TimedEventGenerator(this, "startWormhole");
-  timeline_47.setIntervalMs(47000);
-  timeline_47.setEnabled(false);
-
-  startWebServices();
-
-  createShapes();
-
-  spout = new Spout(this);
-
-  myBusA = new MidiBus(this, "LoopBe Internal MIDI", "LoopBe Internal MIDI", "busA");
-  oscP5 = new OscP5(this, 7001);
-  myRemoteLocation = new NetAddress("127.0.0.1", 7000);
+  //timeline_47 = new TimedEventGenerator(this, "startWormhole", false);
+  //timeline_47.setIntervalMs(47000);
+  //timeline_47.setEnabled(false);
+  
+  executeOnce[0] = false;
+  executeOnce[1] = false;
 }
 
 void draw() {
@@ -174,6 +181,17 @@ void draw() {
     sendOSCFloat("/elm/stages/600x600/live/mix/position", position);
   }
 
+  if (millis() - millisStarted > 40000 && executeOnce[0] == false) {
+    prepareWormhole();
+    
+    executeOnce[0] = true;
+  }
+
+  if (millis() - millisStarted > 47000 && executeOnce[1] == false) {
+    startWormhole();
+    
+    executeOnce[1] = true;
+  }
 
   utility();
 

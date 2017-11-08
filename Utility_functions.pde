@@ -73,7 +73,7 @@ void utility() {
   text(int(frameRate), 5, 16);
   popStyle();
 
-  surface.setTitle(int(frameRate) + " fps");
+  //surface.setTitle(int(frameRate) + " fps");
 }
 
 int getLength(int percentageLength, int direction) {
@@ -182,6 +182,15 @@ void keyPressed() {
     kinectCrowd[3] -= 0.1;
     println("kinect 4 Crowd = " + kinectCrowd[3]);
   }
+  if (key == 'z') {
+    startShow();
+  }
+  if (key == 'x') {
+    endShow();
+  }
+  if (key == 'c') {
+    interimStart();
+  }
   if (keyCode == UP) {
     for (int i = 0; i < 4; i++) {
       activationTimeRipple[i] = true;
@@ -266,7 +275,6 @@ float position = 0;
 boolean crossfade = false;
 
 void startShow() {
-
   //println("start show");
   int channel = 0;
   int pitch = 60 + showModus;   // C3, C#3, D3, D#3
@@ -283,8 +291,7 @@ void startShow() {
 
   crossfade = true;
 
-  timeline_40.setEnabled(true);
-  timeline_47.setEnabled(true);
+  millisStarted = millis();
 
   println("startShow");
 }
@@ -302,8 +309,8 @@ void endShow() {
   // select Spout
   sendOSCInt("/elm/stages/600x600/live/mix/A/media", showModus);
   showModus ++;
-  if (showModus > 4) {
-    showModus = 1;
+  if (showModus > 8) {
+    showModus = 5;
   }
 
   timeline_40.setEnabled(false);
@@ -334,9 +341,9 @@ void interimStart() {
 }
 
 void prepareWormhole() {
-  println("prepare Wormhole" + " , " + (millis() - lastMillis));
+  println("prepare Wormhole");
 }
 
 void startWormhole() {
-  println("start Wormhole" + " , " + (millis() - lastMillis));
+  println("start Wormhole");
 }

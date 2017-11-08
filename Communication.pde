@@ -14,8 +14,8 @@ class TextResponse extends ResponseBuilder {
   }
 
   public  String getResponse(String requestBody) {
-    println("JSON received");
-    println(requestBody);
+    //println("JSON received");
+    //println(requestBody);
     
     String message = requestBody;
     
@@ -26,7 +26,7 @@ class TextResponse extends ResponseBuilder {
     
     statusMessage = received.getString("show");
     
-    println(statusMessage);
+    //println(statusMessage);
     
     
     // println(received);
@@ -44,7 +44,7 @@ class TextResponse extends ResponseBuilder {
     if (statusMessage.equals("start")) {
       startShow();
 
-      lastMillis = millis();
+      //lastMillis = millis();
 
       json.setString("status", "started");
     } else if (statusMessage.equals("stop")) {
@@ -59,10 +59,10 @@ class TextResponse extends ResponseBuilder {
       json.setString("status", "400");
     }
     
-    println(json);
+    //println(json);
     println(json.toString());
     
-    println("responded to webservice request on /" + "status" + " with parameters: " + queryMap); 
+    //println("responded to webservice request on /" + "status" + " with parameters: " + queryMap); 
     return json.toString();  //note that javascript may require: return "callback(" + json.toString() + ")"
   }
 }
