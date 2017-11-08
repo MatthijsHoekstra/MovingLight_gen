@@ -204,10 +204,10 @@ color[][] colorsVirtualTunnels = new color[8][int(pow(widthLEDStrip, 2))];
 void createVirtualTunnels() {
 
   //Uncomment for seeing locations of the projected and virtual tunnels
-  fill(255, 0, 0, 10);
-  for (int n = 0; n < 4; n++) {
-    rect(locationVirtualTunnels[n].x, locationVirtualTunnels[n].y, widthLEDStrip*2 + lengthTunnel, 60);
-  }
+  //fill(255, 0, 0, 10);
+  //for (int n = 0; n < 4; n++) {
+  //  rect(locationVirtualTunnels[n].x, locationVirtualTunnels[n].y, widthLEDStrip*2 + lengthTunnel, 60);
+  //}
 
   //for (int n = 0; n < 4; n++) {
   //  rect(locationProjectedTunnels[n].x, locationProjectedTunnels[n].y, 30, 30);
