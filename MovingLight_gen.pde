@@ -1,4 +1,4 @@
-//TODO //<>// //<>//
+//TODO //<>// //<>// //<>//
 
 //ADD boolean check for the status of the kinects, publish to overview
 //ADD status show, are we running? Do we rerun? What is the show doing? Depends on messages that are received
@@ -25,6 +25,10 @@ DynamicResponseHandler responder1, responder2;
 private TimedEventGenerator statusOutTimer;
 private TimedEventGenerator timeRipplePulseTimer;
 private TimedEventGenerator gravityWavePulseTimer;
+
+private TimedEventGenerator timeline_40;
+private TimedEventGenerator timeline_47;
+
 
 //------------------ Genral, changable variables ------
 
@@ -79,9 +83,11 @@ boolean[] activationGravityWave = new boolean[4];
 
 Spout spout;
 
+int lastMillis;
+
 void setup() {
 
-  size(600, 630);
+  size(600, 630, OPENGL);
 
   smooth(0);
 
@@ -112,19 +118,23 @@ void setup() {
   statusOutTimer = new TimedEventGenerator(this, "sendStatus", false);
   statusOutTimer.setIntervalMs(5000);
   statusOutTimer.setEnabled(true);
-  
-   timeRipplePulseTimer = new TimedEventGenerator(this, "timeRipplePulseActivated", false);
+
+  timeRipplePulseTimer = new TimedEventGenerator(this, "timeRipplePulseActivated", false);
   timeRipplePulseTimer.setIntervalMs(200);
   timeRipplePulseTimer.setEnabled(true);
-  
-  gravityWavePulseTimer = new TimedEventGenerator(this, "gravityWavePulseActivated", false);
-  gravityWavePulseTimer.setIntervalMs(80);
-  gravityWavePulseTimer.setEnabled(true);
+
+  timeline_40 = new TimedEventGenerator(this, "prepareWormhole");
+  timeline_40.setIntervalMs(40000);
+  timeline_40.setEnabled(false);
+
+  timeline_47 = new TimedEventGenerator(this, "startWormhole");
+  timeline_47.setIntervalMs(47000);
+  timeline_47.setEnabled(false);
 
   startWebServices();
-  
+
   createShapes();
-  
+
   spout = new Spout(this);
 }
 
@@ -141,18 +151,18 @@ void draw() {
   for (int i = 0; i < generator.length; i++) {
     generator[i].update();
   }
-  
+
   pushStyle();
   fill(255);
   rect(mouseX, mouseY, 50, 50);
   popStyle();
-  
+
 
   utility();
 
   createVirtualTunnels();
-  
+
   summonEffects();
-  
+
   spout.sendTexture();
 }

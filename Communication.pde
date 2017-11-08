@@ -26,6 +26,8 @@ class TextResponse extends ResponseBuilder {
 
     if (statusMessage.equals("start")) {
       startShow();
+      
+      lastMillis = millis();
 
       json.setString("status", "started");
     } else if (statusMessage.equals("stop")) {
@@ -36,9 +38,10 @@ class TextResponse extends ResponseBuilder {
       String status = getStatus(); //Returns string with "running" / "stop" --> Check with timeLine
 
       json.setString("status", status);
-    } else {
-      json.setString("status", "400");
     }
+    //} else {
+    //  json.setString("status", "400");
+    //}
 
     println("responded to webservice request on /" + "status" + " with parameters: " + queryMap); 
     return json.toString();  //note that javascript may require: return "callback(" + json.toString() + ")"
@@ -55,25 +58,25 @@ void sendStatus() {
     stateKinect[2] = "CRITICAL";
     stateKinect[3] = "OK";
 
-    JSONObject status;
+    JSONObject status = new JSONObject();
 
     String time = year() + "-" + month() + "-" + day() + "T" + hour() + ":"+ minute() + ":" + second();
 
     status.setString("type", "interactive_cycle");
     status.setString("time", time);
 
-    JSONObject payload;
+    JSONObject payload = new JSONObject();
     payload.setString("state_kinect_0", stateKinect[0]);
     payload.setString("state_kinect_1", stateKinect[1]);
     payload.setString("state_kinect_2", stateKinect[2]);
     payload.setString("state_kinect_3", stateKinect[3]);
     payload.setString("fps", ""+frameRate);
-    payload.setString("running", getDiagnostics());
+    payload.setBoolean("running", getDiagnostics());
     
     status.setJSONObject("payload",payload);
 
 
-      URL url = new URL("http://"+OVERVIEW_SERVER_IP+":"+OVERVIEW_SERVER_PORT+"/events");
+    URL url = new URL("http://"+OVERVIEW_SERVER_IP+":"+OVERVIEW_SERVER_PORT+"/events");
     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
     connection.setConnectTimeout(5000);//5 secs
     connection.setReadTimeout(5000);//5 secs
@@ -102,6 +105,6 @@ void sendStatus() {
   }
   catch(Exception e) {
     //e.printStackTrace();
-    println("JSON f*cked up. Wonderful. (Error: sendStatus)");
+    //println("JSON f*cked up. Wonderful. (Error: sendStatus)");
   }
 }

@@ -1,4 +1,4 @@
-import java.net.URL; //<>// //<>// //<>//
+import java.net.URL; //<>// //<>// //<>// //<>//
 import java.net.HttpURLConnection;
 import java.io.OutputStreamWriter;
 import java.io.InputStreamReader;
@@ -114,7 +114,7 @@ void createShapes() {
   angularRect.vertex(0, widthLEDStrip);
   angularRect.vertex(20, widthLEDStrip);
   angularRect.vertex(35, 0);
-  angularRect.endShape(CLOSE); 
+  angularRect.endShape(CLOSE);
 }
 
 void keyPressed() {
@@ -238,7 +238,7 @@ void createVirtualTunnels() {
   popMatrix();
   //1
   pushMatrix();
-  
+
   translate(widthOuterTunnel + lengthTunnel*3 + widthLEDStrip + 20, 90);
   rotate(radians(90));
   image(projectedTunnel[1], 0, 0, lengthTunnel*3, widthOuterTunnel);
@@ -246,14 +246,14 @@ void createVirtualTunnels() {
   popMatrix();
   //2
   pushMatrix();
-  
+
   translate(widthOuterTunnel + lengthTunnel*2 + widthLEDStrip + 93, widthLEDStrip*9+widthOuterTunnel + 15);
   rotate(radians(180));
   image(projectedTunnel[2], 0, 0, lengthTunnel*3, widthOuterTunnel);
   popMatrix();
   //3
   pushMatrix();
-  
+
   translate(0, 180+lengthTunnel + widthLEDStrip*2 + widthOuterTunnel + 14);
   rotate(radians(270));
   image(projectedTunnel[3], 0, 0, lengthTunnel*3, widthOuterTunnel);
@@ -261,40 +261,53 @@ void createVirtualTunnels() {
   popMatrix();
 }
 
-void startShow(){
-  
+void startShow() {
+
   //Start music in Ableton
-  
+
   //Update crossfade time ELM
-  
+
   //Crossfade to Spout ELM
 
+  timeline_40.setEnabled(true);
+  timeline_47.setEnabled(true);
   
+  println("startShow");
 }
 
-void endShow(){
-  
+void endShow() {
+
   //crossfade intensity to 0 ELM
-  
+
   //Select Spout ELM
+
+  timeline_40.setEnabled(false);
+  timeline_47.setEnabled(false);
   
+  println("endShow");
 }
 
-String getStatus(){
+String getStatus() {
   //return "running" "stop"
-  
+
   return "running";
 }
 
-boolean getDiagnostics(){
-  
+Boolean getDiagnostics() {
+
   //if not receiving any messages from any PC than send false;
-  
+
   return true;
 }
 
-void interimStart(){
+void interimStart() {
   //Crossfade to AE
-  
-  
+}
+
+void prepareWormhole() {
+  println("prepare Wormhole" + " , " + (millis() - lastMillis));
+}
+
+void startWormhole() {
+    println("start Wormhole" + " , " + (millis() - lastMillis));
 }
