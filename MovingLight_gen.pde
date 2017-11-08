@@ -1,6 +1,4 @@
- //<>//
-
-//TODO
+//TODO //<>// //<>//
 
 //ADD boolean check for the status of the kinects, publish to overview
 //ADD status show, are we running? Do we rerun? What is the show doing? Depends on messages that are received
@@ -30,7 +28,7 @@ private TimedEventGenerator gravityWavePulseTimer;
 
 int pixelSize = 2; //Determines how many pixels on the screen define 1 pixel on LED strip //Can be used for optimalization later on
 
-boolean helpGrid = true;
+boolean helpGrid = false;
 
 int udpPort = 5883;
 
@@ -48,7 +46,7 @@ int lengthTunnel = pixelSize * 75;
 
 int widthLEDStrip = 30 * pixelSize;
 
-final static int nGenerators = 22;
+final static int nGenerators = 23;
 
 Generator[] generator;
 
@@ -73,7 +71,7 @@ float[] kinectHeight = new float[4];
 float[] kinectCrowd = new float[4];
 float[] kinectChaos = new float[4];
 
-boolean activationMonitor = true;
+boolean[] activationEffect = new boolean[4];
 boolean[] activationTimeRipple = new boolean[4];
 boolean[] activationGravityWave = new boolean[4];
 
@@ -82,8 +80,6 @@ void setup() {
   size(600, 630);
 
   smooth(0);
-  
-  frameRate(120);
 
   mapping = loadImage("data/mapping.png");
 
@@ -139,14 +135,16 @@ void draw() {
   for (int i = 0; i < generator.length; i++) {
     generator[i].update();
   }
+  
   pushStyle();
   fill(255);
   rect(mouseX, mouseY, 50, 50);
   popStyle();
+  
 
   utility();
- 
-  summonEffects();
-  
+
   createVirtualTunnels();
+  
+  summonEffects();
 }
