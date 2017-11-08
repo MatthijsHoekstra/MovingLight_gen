@@ -1,4 +1,4 @@
-//TODO //<>// //<>// //<>//
+//TODO //<>// //<>//
 
 //ADD boolean check for the status of the kinects, publish to overview
 //ADD status show, are we running? Do we rerun? What is the show doing? Depends on messages that are received
@@ -38,7 +38,7 @@ boolean helpGrid = false;
 
 int udpPort = 5883;
 
-String OVERVIEW_SERVER_IP = "10.0.2.50";
+String OVERVIEW_SERVER_IP = "10.0.1.3";
 String OVERVIEW_SERVER_PORT = "5500";
 
 final int HTTP_SERVER_PORT = 8000;
