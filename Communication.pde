@@ -14,13 +14,30 @@ class TextResponse extends ResponseBuilder {
   }
 
   public  String getResponse(String requestBody) {
-    String output = "";
-
+    println("JSON received");
+    println(requestBody);
+    
+    String message = requestBody;
+    
+    JSONObject received = new JSONObject();
+    
+    received = parseJSONObject(message);
     String statusMessage = "";
+    
+    statusMessage = received.getString("show");
+    
+    println(statusMessage);
+    
+    
+    // println(received);
+    
+    //String output = "";
+
+
 
     Map<String, String> queryMap = getQueryMap();    //get parameter map as string pairs
 
-    statusMessage = queryMap.getOrDefault("show", "null");
+   // statusMessage = queryMap.getOrDefault("show", "null");
 
     JSONObject json = new JSONObject();
 
@@ -36,12 +53,15 @@ class TextResponse extends ResponseBuilder {
       json.setString("status", "stop");
     } else if (statusMessage.equals("check")) {
       String status = getStatus(); //Returns string with "running" / "stop" --> Check with timeLine
-
+      println(" check fine" );
       json.setString("status", status);
     } else {
       json.setString("status", "400");
     }
-
+    
+    println(json);
+    println(json.toString());
+    
     println("responded to webservice request on /" + "status" + " with parameters: " + queryMap); 
     return json.toString();  //note that javascript may require: return "callback(" + json.toString() + ")"
   }
