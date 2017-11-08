@@ -271,7 +271,7 @@ void startShow() {
 
   timeline_40.setEnabled(true);
   timeline_47.setEnabled(true);
-  
+
   println("startShow");
 }
 
@@ -283,7 +283,7 @@ void endShow() {
 
   timeline_40.setEnabled(false);
   timeline_47.setEnabled(false);
-  
+
   println("endShow");
 }
 
@@ -309,5 +309,5 @@ void prepareWormhole() {
 }
 
 void startWormhole() {
-    println("start Wormhole" + " , " + (millis() - lastMillis));
+  println("start Wormhole" + " , " + (millis() - lastMillis));
 }
