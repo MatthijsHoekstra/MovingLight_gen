@@ -26,7 +26,7 @@ class TextResponse extends ResponseBuilder {
 
     if (statusMessage.equals("start")) {
       startShow();
-      
+
       lastMillis = millis();
 
       json.setString("status", "started");
@@ -38,15 +38,16 @@ class TextResponse extends ResponseBuilder {
       String status = getStatus(); //Returns string with "running" / "stop" --> Check with timeLine
 
       json.setString("status", status);
+    } else {
+      json.setString("status", "400");
     }
-    //} else {
-    //  json.setString("status", "400");
-    //}
 
     println("responded to webservice request on /" + "status" + " with parameters: " + queryMap); 
     return json.toString();  //note that javascript may require: return "callback(" + json.toString() + ")"
   }
 }
+
+
 
 //------------------------------------------------------------------------------------SEND STATUS TO OVERVIEW PANEL
 String stateKinect[] = new String[4];
@@ -72,8 +73,8 @@ void sendStatus() {
     payload.setString("state_kinect_3", stateKinect[3]);
     payload.setString("fps", ""+frameRate);
     payload.setBoolean("running", getDiagnostics());
-    
-    status.setJSONObject("payload",payload);
+
+    status.setJSONObject("payload", payload);
 
 
     URL url = new URL("http://"+OVERVIEW_SERVER_IP+":"+OVERVIEW_SERVER_PORT+"/events");
@@ -84,7 +85,7 @@ void sendStatus() {
     connection.setRequestMethod("POST");
     connection.setDoOutput(true);
     connection.setRequestProperty("Content-Type", "application/json");
-    
+
     OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());  
     out.write(Integer.parseInt(status.toString()));
     out.flush();
