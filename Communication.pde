@@ -129,3 +129,57 @@ void sendStatus() {
     println("JSON f*cked up. Wonderful. (Error: sendStatus)");
   }
 }
+
+boolean showDebugBusANoteOn = true;
+
+void noteOn(int c, int p, int v, long t, String bus_name) {
+  if (showDebugBusANoteOn) {
+    println();
+    //print(t + " ");
+    print(bus_name);
+    print("   ON:");
+    println("--------");
+    print("  C:" + c);
+    print("  P:" + p);
+    print("  V:" + v);
+    println("Timestamp:" + t);
+  }
+
+  if (p == 24) {
+    interimStart();
+  }
+}
+
+void noteOff(int c, int p, int v, long t, String bus_name) {
+  if (showDebugBusANoteOn) {
+    println();
+    //print(t + " ");
+    print(bus_name);
+    print("   OFF");
+    println("--------");
+    print("  C:" + c);
+    print("  P:" + p);
+    print("  V:" + v);
+    println("Timestamp:" + t);
+  }
+}
+
+void sendOSCFloat(String addr, float value) {
+  /* in the following different ways of creating osc messages are shown by example */
+  OscMessage myMessage = new OscMessage(addr);
+
+  myMessage.add(value); /* add an int to the osc message */
+
+  /* send the message */
+  oscP5.send(myMessage, myRemoteLocation);
+}
+
+void sendOSCInt(String addr, int value) {
+  /* in the following different ways of creating osc messages are shown by example */
+  OscMessage myMessage = new OscMessage(addr);
+
+  myMessage.add(value); /* add an int to the osc message */
+
+  /* send the message */
+  oscP5.send(myMessage, myRemoteLocation);
+}

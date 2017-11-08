@@ -19,6 +19,10 @@ import java.util.Map;
 
 import spout.*;
 
+import themidibus.*;
+import oscP5.*;
+import netP5.*;
+
 SimpleHTTPServer server;
 DynamicResponseHandler responder1, responder2;
 
@@ -85,6 +89,12 @@ Spout spout;
 
 int lastMillis;
 
+int showModus;
+
+MidiBus myBusA;
+OscP5 oscP5;
+NetAddress myRemoteLocation;
+
 void setup() {
 
   size(600, 630, OPENGL);
@@ -122,7 +132,7 @@ void setup() {
   timeRipplePulseTimer = new TimedEventGenerator(this, "timeRipplePulseActivated", false);
   timeRipplePulseTimer.setIntervalMs(200);
   timeRipplePulseTimer.setEnabled(true);
-  
+
   gravityWavePulseTimer = new TimedEventGenerator(this, "gravityWavePulseActivated", false);
   gravityWavePulseTimer.setIntervalMs(200);
   gravityWavePulseTimer.setEnabled(true);
@@ -140,6 +150,10 @@ void setup() {
   createShapes();
 
   spout = new Spout(this);
+
+  myBusA = new MidiBus(this, "LoopBe Internal MIDI", "LoopBe Internal MIDI", "busA");
+  oscP5 = new OscP5(this, 7001);
+  myRemoteLocation = new NetAddress("127.0.0.1", 7000);
 }
 
 void draw() {
@@ -154,6 +168,10 @@ void draw() {
 
   for (int i = 0; i < generator.length; i++) {
     generator[i].update();
+  }
+
+  if (crossfade) {
+    sendOSCFloat("/elm/stages/600x600/live/mix/position", position);
   }
 
   pushStyle();

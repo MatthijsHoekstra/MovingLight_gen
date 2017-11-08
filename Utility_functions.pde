@@ -261,13 +261,27 @@ void createVirtualTunnels() {
   popMatrix();
 }
 
+
+float position = 0;
+boolean crossfade = false;
+
 void startShow() {
 
-  //Start music in Ableton
+  //println("start show");
+  int channel = 0;
+  int pitch = 60 + showModus;   // C3, C#3, D3, D#3
+  int velocity = 127;
+  Note note = new Note(channel, pitch, velocity);
 
-  //Update crossfade time ELM
+  myBusA.sendNoteOn(note); // Send a Midi noteOn
+  myBusA.sendNoteOff(note); // Send a Midi nodeOff
 
-  //Crossfade to Spout ELM
+  sendOSCInt("/elm/stages/600x600/live/transitionDuration", 4); 
+  sendOSCInt("/elm/stages/600x600/live/mix/B/media", 1);
+
+  Ani.to(this, 260, "position", 1.0, Ani.LINEAR, "onEnd:finishedCrossfade");
+
+  crossfade = true;
 
   timeline_40.setEnabled(true);
   timeline_47.setEnabled(true);
@@ -275,11 +289,22 @@ void startShow() {
   println("startShow");
 }
 
+void finishedCrossfade() {
+  sendOSCFloat("/elm/stages/600x600/live/mix/position", position); 
+  crossfade = false;
+}
+
 void endShow() {
 
+  sendOSCFloat("/elm/stages/600x600/live/intensity", 0);
   //crossfade intensity to 0 ELM
 
-  //Select Spout ELM
+  // select Spout
+  sendOSCInt("/elm/stages/600x600/live/mix/A/media", showModus);
+  showModus ++;
+  if (showModus > 4) {
+    showModus = 1;
+  }
 
   timeline_40.setEnabled(false);
   timeline_47.setEnabled(false);
@@ -302,6 +327,10 @@ Boolean getDiagnostics() {
 
 void interimStart() {
   //Crossfade to AE
+
+  Ani.to(this, 260, "position", 0.0, Ani.LINEAR, "onEnd:finishedCrossfade");
+
+  crossfade = true;
 }
 
 void prepareWormhole() {
