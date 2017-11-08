@@ -125,7 +125,7 @@ void sendStatus() {
     //connection.disconnect();
   }
   catch(Exception e) {
-    e.printStackTrace();
+    //e.printStackTrace();
     println("JSON f*cked up. Wonderful. (Error: sendStatus)");
   }
 }
