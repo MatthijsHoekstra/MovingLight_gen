@@ -1,4 +1,4 @@
-import java.net.URL; //<>// //<>// //<>//
+import java.net.URL; //<>// //<>// //<>// //<>//
 import java.net.HttpURLConnection;
 import java.io.OutputStreamWriter;
 import java.io.InputStreamReader;
@@ -286,11 +286,11 @@ String getStatus(){
   return "running";
 }
 
-boolean getDiagnostics(){
+String getDiagnostics(){
   
   //if not receiving any messages from any PC than send false;
   
-  return true;
+  return "true";
 }
 
 void interimStart(){
