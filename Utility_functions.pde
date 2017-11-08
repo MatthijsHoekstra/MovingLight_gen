@@ -86,21 +86,21 @@ int getLength(int percentageLength, int direction) {
   return interLength;
 }
 
-void getStatus() {
-  ////println("get Status Show");
-  //if (ipStatusServer.equals("localhost") == false) {
-  //  try {
-  //    GetRequest get = new GetRequest("http://httprocessing.heroku.com");
-  //    get.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-  //    get.send();
+//void getStatus() {
+//  ////println("get Status Show");
+//  //if (ipStatusServer.equals("localhost") == false) {
+//  //  try {
+//  //    GetRequest get = new GetRequest("http://httprocessing.heroku.com");
+//  //    get.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+//  //    get.send();
 
-  //    println("Reponse Content: " + get.getContent());
-  //  }
-  //  catch(Exception e) {
-  //    println("JSON f*cked up. Wonderful. (Error: getStatus)");
-  //  }
-  //}
-}
+//  //    println("Reponse Content: " + get.getContent());
+//  //  }
+//  //  catch(Exception e) {
+//  //    println("JSON f*cked up. Wonderful. (Error: getStatus)");
+//  //  }
+//  //}
+//}
 //int getPosition(
 
 PShape angularRect;
@@ -259,4 +259,42 @@ void createVirtualTunnels() {
   image(projectedTunnel[3], 0, 0, lengthTunnel*3, widthOuterTunnel);
 
   popMatrix();
+}
+
+void startShow(){
+  
+  //Start music in Ableton
+  
+  //Update crossfade time ELM
+  
+  //Crossfade to Spout ELM
+
+  
+}
+
+void endShow(){
+  
+  //crossfade intensity to 0 ELM
+  
+  //Select Spout ELM
+  
+}
+
+String getStatus(){
+  //return "running" "stop"
+  
+  return "running";
+}
+
+boolean getDiagnostics(){
+  
+  //if not receiving any messages from any PC than send false;
+  
+  return true;
+}
+
+void interimStart(){
+  //Crossfade to AE
+  
+  
 }

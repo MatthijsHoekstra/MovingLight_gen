@@ -17,6 +17,8 @@ import org.multiply.processing.TimedEventGenerator;
 import http.*;
 import java.util.Map;
 
+import spout.*;
+
 SimpleHTTPServer server;
 DynamicResponseHandler responder1, responder2;
 
@@ -75,6 +77,8 @@ boolean[] activationEffect = new boolean[4];
 boolean[] activationTimeRipple = new boolean[4];
 boolean[] activationGravityWave = new boolean[4];
 
+Spout spout;
+
 void setup() {
 
   size(600, 630);
@@ -120,6 +124,8 @@ void setup() {
   startWebServices();
   
   createShapes();
+  
+  spout = new Spout(this);
 }
 
 void draw() {
@@ -147,4 +153,6 @@ void draw() {
   createVirtualTunnels();
   
   summonEffects();
+  
+  spout.sendTexture();
 }
