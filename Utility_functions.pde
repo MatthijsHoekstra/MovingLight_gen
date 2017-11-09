@@ -277,13 +277,19 @@ boolean crossfade = false;
 void startShow() {
   //println("start show");
   int channel = 0;
-  int pitch = 60 + showModus;   // C3, C#3, D3, D#3
+  int pitch = 1; // ableton start
   int velocity = 127;
-  Note note = new Note(channel, pitch, velocity);
-
-  myBusA.sendNoteOn(note); // Send a Midi noteOn
-  myBusA.sendNoteOff(note); // Send a Midi nodeOff
-
+  Note noteStart = new Note(channel, pitch, velocity);
+  myBusA.sendNoteOn(noteStart); // Send a Midi noteOn
+  
+  channel = 0;
+  pitch = 60 + showModus;   // C3, C#3, D3, D#3
+  velocity = 127;
+  Note notePlay = new Note(channel, pitch, velocity);
+  myBusA.sendNoteOn(notePlay); // Send a Midi noteOn
+  
+  intensity = 1;
+  sendOSCFloat("/elm/stages/600x600/live/intensity", intensity);
   sendOSCInt("/elm/stages/600x600/live/transitionDuration", 4); 
   sendOSCInt("/elm/stages/600x600/live/mix/B/media", 1);
 
@@ -292,6 +298,9 @@ void startShow() {
   crossfade = true;
 
   millisStarted = millis();
+  
+  executeOnce[0] = false;
+
 
   println("startShow");
 }
@@ -301,20 +310,26 @@ void finishedCrossfade() {
   crossfade = false;
 }
 
+float intensity;
+boolean dimming = false;
+
 void endShow() {
-
-  sendOSCFloat("/elm/stages/600x600/live/intensity", 0);
+  Ani.to(this, 260, "intensity", 0.0, Ani.LINEAR, "onEnd:finishedDimming");
+  
+  dimming = true;
+  
   //crossfade intensity to 0 ELM
-
-  // select Spout
-  sendOSCInt("/elm/stages/600x600/live/mix/A/media", showModus);
-  showModus ++;
-  if (showModus > 8) {
-    showModus = 5;
-  }
 
   println("endShow");
 }
+
+void finishedDimming() {
+  sendOSCFloat("/elm/stages/600x600/live/intensity", intensity); 
+  sendOSCInt("/elm/stages/600x600/live/mix/A/media", 30);
+  dimming = false;
+  
+}
+
 
 String getStatus() {
   //return "running" "stop"
@@ -330,17 +345,37 @@ Boolean getDiagnostics() {
 }
 
 void interimStart() {
-  //Crossfade to AE
+  //Crossfade to AE-.....
 
   Ani.to(this, 260, "position", 0.0, Ani.LINEAR, "onEnd:finishedCrossfade");
 
   crossfade = true;
+  
+  millisStarted_1 = millis();
+  executeOnce[1] = false;
+  
+  println("interim start");
 }
 
 void prepareWormhole() {
   println("prepare Wormhole");
+  
+  // select spout
+  sendOSCInt("/elm/stages/600x600/live/mix/A/media", showModus);
+  
+  showModus ++;
+  if (showModus > 8) {
+    showModus = 5;
+  }
+  
+  sendOSCInt("/elm/stages/600x600/live/transitionDuration", 1); 
 }
 
 void startWormhole() {
   println("start Wormhole");
+  
+  // select empty mode
+  sendOSCInt("/elm/stages/600x600/live/mix/B/media", 30);
+
+
 }

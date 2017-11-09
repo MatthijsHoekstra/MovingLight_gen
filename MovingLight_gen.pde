@@ -30,8 +30,6 @@ private TimedEventGenerator statusOutTimer;
 private TimedEventGenerator timeRipplePulseTimer;
 private TimedEventGenerator gravityWavePulseTimer;
 
-private TimedEventGenerator timeline_40;
-private TimedEventGenerator timeline_47;
 
 
 //------------------ Genral, changable variables ------
@@ -40,7 +38,7 @@ int pixelSize = 2; //Determines how many pixels on the screen define 1 pixel on 
 
 boolean helpGrid = false;
 
-int udpPort = 5883;
+int udpPort = 5000;
 
 String OVERVIEW_SERVER_IP = "10.0.1.3";
 String OVERVIEW_SERVER_PORT = "5500";
@@ -88,11 +86,13 @@ boolean[] activationGravityWave = new boolean[4];
 Spout spout;
 
 int millisStarted;
+int millisStarted_1;
 
 int showModus = 5;
 
 MidiBus myBusA;
 OscP5 oscP5;
+OscP5 oscP5tcpClient;
 NetAddress myRemoteLocation;
 
 boolean[] executeOnce = new boolean[2];
@@ -122,8 +122,7 @@ void setup() {
   Ani.init(this);
   Ani.setDefaultTimeMode(Ani.FRAMES);
 
-  udp = new UDP( this, udpPort );
-  udp.listen( true );
+
 
   noStroke();
 
@@ -137,6 +136,9 @@ void setup() {
 
   myBusA = new MidiBus(this, "LoopBe Internal MIDI", "LoopBe Internal MIDI", "busA");
   oscP5 = new OscP5(this, 9001);
+  
+  //oscP5tcpClient = new OscP5(this, "127.0.0.1", 5000, OscP5.UDP);
+  
   myRemoteLocation = new NetAddress("127.0.0.1", 9000);
 
   statusOutTimer = new TimedEventGenerator(this, "sendStatus", false);
@@ -158,9 +160,12 @@ void setup() {
   //timeline_47 = new TimedEventGenerator(this, "startWormhole", false);
   //timeline_47.setIntervalMs(47000);
   //timeline_47.setEnabled(false);
-  
-  executeOnce[0] = false;
-  executeOnce[1] = false;
+
+  executeOnce[0] = true;
+  executeOnce[1] = true;
+
+  udp = new UDP( this, udpPort );
+  udp.listen( true );
 }
 
 void draw() {
@@ -180,16 +185,19 @@ void draw() {
   if (crossfade) {
     sendOSCFloat("/elm/stages/600x600/live/mix/position", position);
   }
+  if (dimming) {
+    sendOSCFloat("/elm/stages/600x600/live/intensity", intensity);
+  }
 
   if (millis() - millisStarted > 40000 && executeOnce[0] == false) {
     prepareWormhole();
-    
+
     executeOnce[0] = true;
   }
 
-  if (millis() - millisStarted > 47000 && executeOnce[1] == false) {
+  if (millis() -  millisStarted_1 > 5000 && executeOnce[1] == false) {
     startWormhole();
-    
+
     executeOnce[1] = true;
   }
 

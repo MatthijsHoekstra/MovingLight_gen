@@ -19,3 +19,10 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
     println("kinect" + i + " : " + kinectHeight[i] + " / " + kinectCrowd[i]);
   }
 }
+
+void oscEvent(OscMessage theOscMessage) {
+  /* print the address pattern and the typetag of the received OscMessage */
+  print("### received an osc message.");
+  print(" addrpattern: "+theOscMessage.addrPattern());
+  println(" typetag: "+theOscMessage.typetag());
+}

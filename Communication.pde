@@ -126,7 +126,7 @@ void sendStatus() {
   }
   catch(Exception e) {
     //e.printStackTrace();
-    println("JSON f*cked up. Wonderful. (Error: sendStatus)");
+    //println("JSON f*cked up. Wonderful. (Error: sendStatus)");
   }
 }
 
