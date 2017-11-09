@@ -313,9 +313,6 @@ void endShow() {
     showModus = 5;
   }
 
-  timeline_40.setEnabled(false);
-  timeline_47.setEnabled(false);
-
   println("endShow");
 }
 
