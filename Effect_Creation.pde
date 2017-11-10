@@ -1,4 +1,6 @@
 void summonEffects() {
+  
+  
 
   for (int i = 0; i < 4; i++) {
     if (gravityWaveStage[i] == 0 && kinectCrowd[i] > 0.001) {
@@ -27,8 +29,16 @@ void summonEffects() {
     //int gravityWaveFrequency = int(86 - (80 * kinectCrowd[i]));
     int gravityWaveFrequency = 1200;
     
+    int speedCalculated = 10;
+    
+    if (differenceKinectHeight[i] > 10){
+      
+    }
+    
+    speedCalculated = int(map(differenceKinectHeight[i], 0, 30, 5000, 1000));
+    
     if (frameCount % gravityWaveFrequency == 0) {  // gravityWaves
-      int speed = 4000; //(12 - int(7 * kinectCrowd[i])) * 60;
+      int speed = speedCalculated; //(12 - int(7 * kinectCrowd[i])) * 60;
       int nSteps = 6;
       int size = int(kinectCrowd[i] * 150);
       int startPosition = int(random(widthLEDStrip * 4 - size));

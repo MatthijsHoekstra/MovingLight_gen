@@ -1,4 +1,4 @@
-import java.net.URL; //<>// //<>// //<>// //<>//
+import java.net.URL; //<>// //<>// //<>// //<>// //<>// //<>//
 import java.net.HttpURLConnection;
 import java.io.OutputStreamWriter;
 import java.io.InputStreamReader;
@@ -10,8 +10,6 @@ PVector[] locationVirtualTunnels = new PVector[4];
 PVector[] locationProjectedTunnels = new PVector[4];
 
 PImage[] projectedTunnel = new PImage[4];
-
-
 
 void createGrid() {  
   //Create grid for the position of each tunnel
