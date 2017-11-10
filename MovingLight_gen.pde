@@ -79,10 +79,6 @@ float[] kinectHeight = new float[4];
 float[] kinectCrowd = new float[4];
 float[] kinectChaos = new float[4];
 
-boolean[] activationEffect = new boolean[4];
-boolean[] activationTimeRipple = new boolean[4];
-boolean[] activationGravityWave = new boolean[4];
-
 Spout spout;
 
 int millisStarted;

@@ -1,11 +1,15 @@
 void summonEffects() {
 
   for (int i = 0; i < 4; i++) {
-    if (activationEffect[i]) {
-      if (activationTimeRipple[i]) {
-      } else if (activationGravityWave[i]) {
-      }
+    if (gravityWaveStage[i] == 0 && kinectCrowd[i] > 0.001) {
+      gravityWaveStage[i] = 1;  // start gravitywavepulse
+      nextPulse = 0;
+      gravityWavePulseTimer.setEnabled(!gravityWavePulseTimer.isEnabled());
     }
+    if (gravityWaveStage[i] == 2 && kinectCrowd[i] < 0.001) {
+      gravityWaveStage[i] = 0;  // crowd activity dimmed again, we can make a new gravity wave pulse!
+    }
+    
   }
 
   if (frameCount % 60 == 0) {  // timeRipples
@@ -18,16 +22,18 @@ void summonEffects() {
       generator[i * 4].addTimeRipple(120, int(depth), size, position);
     }
   }
+    
   for (int i = 0; i < 4; i++) {
-    int gravityWaveFrequency = int(86 - (80 * kinectCrowd[i]));
-
+    //int gravityWaveFrequency = int(86 - (80 * kinectCrowd[i]));
+    int gravityWaveFrequency = 1200;
+    
     if (frameCount % gravityWaveFrequency == 0) {  // gravityWaves
-      int speed = (12 - int(7 * kinectCrowd[i])) * 60;
-      int depth = int(random(0, lengthTunnel));
-      int size = 20;
-      int startPosition = int(random(widthLEDStrip * 4));
-
-      generator[16 + (i * 2)].addGravityWave(speed, depth, size, startPosition); // int direction_, int duration_, int depth_, int size_, int startPosition_
+      int speed = 4000; //(12 - int(7 * kinectCrowd[i])) * 60;
+      int nSteps = 6;
+      int size = int(kinectCrowd[i] * 150);
+      int startPosition = int(random(widthLEDStrip * 4 - size));
+      
+      generator[16 + (i * 2)].addGravityWave(speed, nSteps, size, startPosition); // int direction_, int duration_, int depth_, int size_, int startPosition_
     }
   }
 }
@@ -44,12 +50,17 @@ void timeRipplePulseActivated() {
 }
 
 void gravityWavePulseActivated() {
-  generator[12 + nextPulse].addGravityWavePulse(110, FULL_LENGTH_TUNNEL);
-  nextPulse ++;
-
-  if (nextPulse == 4) {
-    nextPulse = 0;
-    gravityWavePulseTimer.setEnabled(!gravityWavePulseTimer.isEnabled());
-    //println("pulse disabled");
+  for (int i = 0; i < 4; i++) {
+    if (gravityWaveStage[i] == 1) {
+      generator[4 + nextPulse].addGravityWavePulse(110, FULL_LENGTH_TUNNEL);
+      nextPulse ++;
+  
+      if (nextPulse == 4) {
+        gravityWaveStage[i] = 2; // gravity wave pulse is done!
+        nextPulse = 0;
+        gravityWavePulseTimer.setEnabled(!gravityWavePulseTimer.isEnabled());
+        //println("pulse disabled");
+      }
+    }
   }
 }

@@ -1,18 +1,20 @@
-class gravityWave {
-  int direction, duration, distance, waveSize, startPosition;
+byte [] gravityWaveStage = new byte[4];
 
-  int x, y, radius;
+class gravityWave {
+  int direction, duration, distance, waveSize, startPosition, tunnelSegments;
+
+  int x, y;
 
   boolean finished = false;
 
-  gravityWave(int direction_, int duration_, int depth_, int size_, int startPosition_) {
+  gravityWave(int direction_, int duration_, int nSteps_, int size_, int startPosition_) {
     direction = direction_;
     duration = duration_;
     waveSize = size_;
-    x = depth_;
     startPosition = startPosition_;
-    distance = widthLEDStrip * 4;
-
+    distance = widthLEDStrip * 4 * nSteps_;
+    tunnelSegments = lengthTunnel / nSteps_;
+    
     if (direction == UP_DOWN) {
       Ani.to(this, duration, "y", distance, Ani.QUINT_OUT, "onEnd:finished");
     }
@@ -29,26 +31,41 @@ class gravityWave {
   void update() {
     pushStyle();
     //filter(BLUR);
-    fill(255, 240 - abs(y));
+    //fill(255, 240 - abs(y));
+    fill(255);
     
-    if (direction == UP_DOWN) {
-      int yPos = y + startPosition;
-    
-      if (yPos > widthLEDStrip * 4 - 10) {
-        yPos -= widthLEDStrip * 4;
-      }
+    if (direction == UP_DOWN) {   
+      x = y / (widthLEDStrip * 4) * tunnelSegments;
+      int yPos =  y % (widthLEDStrip * 4) + startPosition;
+      int leftoverHeight = 0;
+      //println("yPos = " + (yPos - startPosition));
       
-      rect(x, yPos, waveSize, 10);
+      if (yPos > widthLEDStrip * 4 - waveSize) {   // if rectangle reaches bottom of tunnel
+        if (yPos < widthLEDStrip * 4) {
+          leftoverHeight = (widthLEDStrip * 4) - yPos;
+          rect(x, yPos, 21, leftoverHeight);
+        }
+        yPos -= widthLEDStrip * 4; 
+      }
+
+      rect(x, yPos, 21, waveSize);
     }
     
-    if (direction == DOWN_UP) {
-      int yPos = y - startPosition;
-    
-      if (yPos < -widthLEDStrip * 4) {
-        yPos += widthLEDStrip * 4;
-      }
+    if (direction == DOWN_UP) {  
+      x = y / (widthLEDStrip * 4) * -tunnelSegments;
+      int yPos = y % (widthLEDStrip * 4) - startPosition;
+      int leftoverHeight = 0;
+      //println("yPos = " + (yPos - startPosition));
       
-      rect(x, yPos, waveSize, 10);
+      if (yPos < - widthLEDStrip * 4) {   // if rectangle reaches top of tunnel 
+        if (yPos > - widthLEDStrip * 4 - waveSize) {
+          leftoverHeight = (widthLEDStrip * 4) + yPos;
+          rect(x, - widthLEDStrip * 4, 21, waveSize + leftoverHeight); 
+        }
+        yPos += widthLEDStrip * 4; 
+      }
+
+      rect(x, yPos, 21, waveSize);
     }
     
 

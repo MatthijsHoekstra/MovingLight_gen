@@ -18,7 +18,7 @@ void createGrid() {
   for (int i = 0; i < nGenerators; i++) {
     locationGenerator[i] = new PVector();
 
-    if (i < 8) {
+    if (i < 8) {                                              
       locationGenerator[i].x = widthOuterTunnel; 
       locationGenerator[i].y = widthOuterTunnel + (i * widthLEDStrip);
     } else if (i >= 8 && i < 16) {
@@ -191,19 +191,8 @@ void keyPressed() {
   if (key == 'c') {
     interimStart();
   }
-  if (keyCode == UP) {
-    for (int i = 0; i < 4; i++) {
-      activationTimeRipple[i] = true;
-    }
-    nextPulse = 0;
-    timeRipplePulseTimer.setEnabled(!timeRipplePulseTimer.isEnabled());
-  }
   if (keyCode == DOWN) {
-    for (int i = 0; i < 4; i++) {
-      activationGravityWave[i] = true;
-    }
-    nextPulse = 0;
-    gravityWavePulseTimer.setEnabled(!timeRipplePulseTimer.isEnabled());
+    gravityWaveStage[2] = 0;
   }
 }
 
@@ -283,7 +272,7 @@ void startShow() {
   myBusA.sendNoteOn(noteStart); // Send a Midi noteOn
   
   channel = 0;
-  pitch = 60 + showModus;   // C3, C#3, D3, D#3
+  pitch = 55 + showModus;   // C3, C#3, D3, D#3
   velocity = 127;
   Note notePlay = new Note(channel, pitch, velocity);
   myBusA.sendNoteOn(notePlay); // Send a Midi noteOn
@@ -346,8 +335,14 @@ Boolean getDiagnostics() {
 
 void interimStart() {
   //Crossfade to AE-.....
-
-  Ani.to(this, 260, "position", 0.0, Ani.LINEAR, "onEnd:finishedCrossfade");
+  sendOSCInt("/elm/stages/600x600/live/mix/A/media", showModus);
+  
+  showModus ++;
+  if (showModus > 8) {
+    showModus = 5;
+  }
+ 
+  Ani.to(this, 1, "position", 0.0, Ani.LINEAR, "onEnd:finishedCrossfade");
 
   crossfade = true;
   
@@ -359,16 +354,7 @@ void interimStart() {
 
 void prepareWormhole() {
   println("prepare Wormhole");
-  
-  // select spout
-  sendOSCInt("/elm/stages/600x600/live/mix/A/media", showModus);
-  
-  showModus ++;
-  if (showModus > 8) {
-    showModus = 5;
-  }
-  
-  sendOSCInt("/elm/stages/600x600/live/transitionDuration", 1); 
+  sendOSCInt("/elm/stages/600x600/live/mix/A/media", 30);
 }
 
 void startWormhole() {
