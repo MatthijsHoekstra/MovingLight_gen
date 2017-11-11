@@ -37,7 +37,7 @@ private TimedEventGenerator gravityWavePulseTimer;
 
 int pixelSize = 2; //Determines how many pixels on the screen define 1 pixel on LED strip //Can be used for optimalization later on
 
-boolean helpGrid = false;
+boolean helpGrid = true;
 
 int udpPort = 5000;
 
@@ -145,10 +145,6 @@ void setup() {
   timeRipplePulseTimer = new TimedEventGenerator(this, "timeRipplePulseActivated", false);
   timeRipplePulseTimer.setIntervalMs(200);
   timeRipplePulseTimer.setEnabled(true);
-
-  gravityWavePulseTimer = new TimedEventGenerator(this, "gravityWavePulseActivated", false);
-  gravityWavePulseTimer.setIntervalMs(200);
-  gravityWavePulseTimer.setEnabled(true);
 
   //timeline_40 = new TimedEventGenerator(this, "prepareWormhole", false);
   //timeline_40.setIntervalMs(40000);

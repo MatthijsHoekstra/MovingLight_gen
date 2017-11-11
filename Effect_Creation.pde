@@ -1,17 +1,25 @@
+int tresholdDifferenceKinectHeight = 15;
 
 void summonEffects() {
   for (int i =0; i < 4; i++) {
-    if (differenceKinectHeight[i] > 15) {
-      //Send effect 
+    if (differenceKinectHeight[i] > tresholdDifferenceKinectHeight) {
+      // start gravitywavepulse
+      println("tunnel " + i + " is stage " + gravityWaveStage[i]);
+      
+      generator[i + i*3].addGravityWavePulse(50, FULL_LENGTH_TUNNEL, 0);
+      generator[i+1+ i*3].addGravityWavePulse(50, FULL_LENGTH_TUNNEL, 10);
+      generator[i+2+ i*3].addGravityWavePulse(50, FULL_LENGTH_TUNNEL, 20);
+      generator[i+3+ i*3].addGravityWavePulse(50, FULL_LENGTH_TUNNEL, 30);
+      //Send effect
     }
   }
-  
-  
+
+
   //meanKinectHeight[i] is the average heigth spread over 10 messages UDP
-  
+
   //kinectCrowd[i] filling of the screen each person adds 0.02, max out at 1
-  
-  
+
+
 
 
 
@@ -37,26 +45,26 @@ void summonEffects() {
   //  }
   //}
 
-  for (int i = 0; i < 4; i++) {
-    //int gravityWaveFrequency = int(86 - (80 * kinectCrowd[i]));
-    int gravityWaveFrequency = 60;
+  //for (int i = 0; i < 4; i++) {
+  //  //int gravityWaveFrequency = int(86 - (80 * kinectCrowd[i]));
+  //  int gravityWaveFrequency = 600;
 
-    int speedCalculated = 30;
+  //  int speedCalculated = 300;
 
-    if (differenceKinectHeight[i] > 10) {
-    }
+  //  if (differenceKinectHeight[i] > 10) {
+  //  }
 
-    speedCalculated = int(map(differenceKinectHeight[i], 0, 30, 5000, 20));
+  //  speedCalculated = int(map(differenceKinectHeight[i], 0, 30, 5000, 20));
 
-    if (frameCount % gravityWaveFrequency == 0) {  // gravityWaves
-      int speed = speedCalculated; //(12 - int(7 * kinectCrowd[i])) * 60;
-      int nSteps = 6;
-      int size = int(1 * 150);
-      int startPosition = int(random(widthLEDStrip * 4 - size));
+  //  if (frameCount % gravityWaveFrequency == 0) {  // gravityWaves
+  //    int speed = speedCalculated; //(12 - int(7 * kinectCrowd[i])) * 60;
+  //    int nSteps = 6;
+  //    int size = int(1 * 150);
+  //    int startPosition = int(random(widthLEDStrip * 4 - size));
 
-      generator[16 + (i * 2)].addGravityWave(speed, nSteps, size, startPosition); // int direction_, int duration_, int depth_, int size_, int startPosition_
-    }
-  }
+  //    generator[16 + (i * 2)].addGravityWave(speed, nSteps, size, startPosition); // int direction_, int duration_, int depth_, int size_, int startPosition_
+  //  }
+  //}
 }
 
 void timeRipplePulseActivated() {
@@ -67,21 +75,5 @@ void timeRipplePulseActivated() {
     nextPulse = 0;
     timeRipplePulseTimer.setEnabled(!timeRipplePulseTimer.isEnabled());
     //println("pulse disabled");
-  }
-}
-
-void gravityWavePulseActivated() {
-  for (int i = 0; i < 4; i++) {
-    if (gravityWaveStage[i] == 1) {
-      generator[4 + nextPulse].addGravityWavePulse(110, FULL_LENGTH_TUNNEL);
-      nextPulse ++;
-
-      if (nextPulse == 4) {
-        gravityWaveStage[i] = 2; // gravity wave pulse is done!
-        nextPulse = 0;
-        gravityWavePulseTimer.setEnabled(!gravityWavePulseTimer.isEnabled());
-        //println("pulse disabled");
-      }
-    }
   }
 }

@@ -1,32 +1,63 @@
 class gravityWavePulse {
-  int direction, duration, distance;
+  int direction, duration, distance, delay;
 
   int x, y;
 
   boolean finished = false;
 
-  gravityWavePulse(int direction_, int duration_, int distance_) {
+  int opacity = 255;
+
+  gravityWavePulse(int direction_, int duration_, int distance_, int delay_) {
     direction = direction_;
     duration = duration_;
+    delay = delay_;
 
-    distance = getLength(distance_ , 0);
-    distance = getLength(distance_ , 0);
-    
-    Ani.to(this, duration, "x", distance, Ani.QUAD_IN, "onEnd:finished");
+    distance = getLength(distance_, 0);
+    distance = getLength(distance_, 0);
+
+
+
+    if (direction == LEFT_RIGHT) {
+      Ani.to(this, duration, delay, "x", distance - 20, Ani.QUAD_IN, "onEnd:finished");
+    }
+
+    if (direction == RIGHT_LEFT) {
+      x -= 20;
+
+      Ani.to(this, duration, delay, "x", -distance, Ani.QUAD_IN, "onEnd:finished");
+    }
   }
 
   void update() {
     pushStyle();
-    //filter(BLUR);
-    fill(255);
-    if (direction == LEFT_RIGHT) {  // wrong, we want to make this RIGHT_LEFT
-      shape(angularRect, -x + distance, y);
+    fill(255,205 - x);
+
+    if (direction == LEFT_RIGHT) {
+      beginShape();
+      vertex(15 + x, 0);
+      vertex(0 + x, widthLEDStrip);
+      vertex(20 + x, widthLEDStrip);
+      vertex(35 + x, 0);
+      endShape(CLOSE);
     }
-    if (direction == RIGHT_LEFT) {  // wrong, we want to make this LEFT_RIGHT
-      shape(angularRect, x - distance, y);
+
+    if (direction == RIGHT_LEFT) {
+      beginShape();
+      vertex(15 + x, 0);
+      vertex(0 + x, widthLEDStrip);
+      vertex(20 + x, widthLEDStrip);
+      vertex(35 + x, 0);
+      endShape(CLOSE);
     }
+    //angularRect.setFill(200, 0, 0);
+
+
+    //shape(angularRect, x, y);
+
+
     popStyle();
   }
+
 
   void finished() {
     finished = true;

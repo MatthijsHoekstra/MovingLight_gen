@@ -84,12 +84,18 @@ void receive( byte[] data, String ip, int port ) {  // <-- extended handler
 
 
     /* 
+     in realiteit
+     0 = voor                   generator 4 - 7
+     1 = rechts                 generator 8 - 11
+     2 = links                  generator 0 - 3
+     3 = achter                 generator 12 - 15
      
-     TODO : check if kinect numbers are now correct with generaor numbers
-     0 = left                   generator 0 - 3
-     1 = right                  generator 8 - 11
-     2 = tunnel 1 (entrance)    generator 4 - 7
-     3 = tunnel 2               generator 12 - 15
+     kinectRemap = {2, 0, 1, 3};
+     0 = links                  generator 0 - 3
+     1 = voor                   generator 4 - 7
+     2 = rechts                 generator 8 - 11
+     3 = achter                 generator 12 - 15
+     
      */
   }
 }

@@ -79,8 +79,8 @@ class Generator {
     timeRipples.add(new timeRipple(direction, duration, distance_, size, position));
   }
   
-  void addGravityWavePulse(int duration, int distance_) { 
-    gravityWavePulses.add(new gravityWavePulse(direction, duration, distance_));
+  void addGravityWavePulse(int duration, int distance_, int delay) { 
+    gravityWavePulses.add(new gravityWavePulse(direction, duration, distance_, delay));
   }
   
   void addGravityWave(int duration_, int depth_, int size_, int startPosition_) { 

@@ -16,11 +16,11 @@ class gravityWave {
     tunnelSegments = lengthTunnel / nSteps_;
     
     if (direction == UP_DOWN) {
-      Ani.to(this, 120, "y", distance, Ani.QUINT_OUT, "onEnd:finished");
+      Ani.to(this, duration, "y", distance, Ani.QUINT_OUT, "onEnd:finished");
     }
 
     if (direction == DOWN_UP) {
-      Ani.to(this, 120, "y", -distance, Ani.QUINT_OUT, "onEnd:finished");
+      Ani.to(this, duration, "y", -distance, Ani.QUINT_OUT, "onEnd:finished");
     }
     
     //Ani.to(this, duration, "radius", size_ * 2, Ani.LINEAR, "onEnd:finished");

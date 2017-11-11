@@ -106,7 +106,7 @@ PShape angularRect;
 void createShapes() {
   angularRect = createShape();
   angularRect.beginShape();
-  angularRect.fill(255);
+  //angularRect.fill(255);
   angularRect.noStroke();
   angularRect.vertex(15, 0);
   angularRect.vertex(0, widthLEDStrip);
@@ -117,68 +117,16 @@ void createShapes() {
 
 void keyPressed() {
   if (key == '1') {
-    kinectHeight[0] += 0.1;
-    println("kinect 1 Height = " + kinectHeight[0]);
+    differenceKinectHeight[0] = 16;
   }
   if (key == '2') {
-    kinectHeight[0] -= 0.1;
-    println("kinect 1 Height = " + kinectHeight[0]);
+    differenceKinectHeight[1] = 16;
   }
   if (key == '3') {
-    kinectHeight[1] += 0.1;
-    println("kinect 2 Height = " + kinectHeight[1]);
+    differenceKinectHeight[2] = 16;
   }
   if (key == '4') {
-    kinectHeight[1] -= 0.1;
-    println("kinect 2 Height = " + kinectHeight[1]);
-  }
-  if (key == '5') {
-    kinectHeight[2] += 0.1;
-    println("kinect 3 Height = " + kinectHeight[2]);
-  }
-  if (key == '6') {
-    kinectHeight[2] -= 0.1;
-    println("kinect 3 Height = " + kinectHeight[2]);
-  }
-  if (key == '7') {
-    kinectHeight[3] += 0.1;
-    println("kinect 4 Height = " + kinectHeight[3]);
-  }
-  if (key == '8') {
-    kinectHeight[3] -= 0.1;
-    println("kinect 4 Height = " + kinectHeight[3]);
-  }
-  if (key == 'q') {
-    kinectCrowd[0] += 0.1;
-    println("kinect 1 Crowd = " + kinectCrowd[0]);
-  }
-  if (key == 'w') {
-    kinectCrowd[0] -= 0.1;
-    println("kinect 1 Crowd = " + kinectCrowd[0]);
-  }
-  if (key == 'e') {
-    kinectCrowd[1] += 0.1;
-    println("kinect 2 Crowd = " + kinectCrowd[1]);
-  }
-  if (key == 'r') {
-    kinectCrowd[1] -= 0.1;
-    println("kinect 2 Crowd = " + kinectCrowd[1]);
-  }
-  if (key == 't') {
-    kinectCrowd[2] += 0.1;
-    println("kinect 3 Crowd = " + kinectCrowd[2]);
-  }
-  if (key == 'y') {
-    kinectCrowd[2] -= 0.1;
-    println("kinect 3 Crowd = " + kinectCrowd[2]);
-  }
-  if (key == 'u') {
-    kinectCrowd[3] += 0.1;
-    println("kinect 4 Crowd = " + kinectCrowd[3]);
-  }
-  if (key == 'i') {
-    kinectCrowd[3] -= 0.1;
-    println("kinect 4 Crowd = " + kinectCrowd[3]);
+    differenceKinectHeight[3] = 16;
   }
   if (key == 'z') {
     startShow();
@@ -189,8 +137,20 @@ void keyPressed() {
   if (key == 'c') {
     interimStart();
   }
-  if (keyCode == DOWN) {
-    gravityWaveStage[2] = 0;
+}
+
+void keyReleased() {
+  if (key == '1') {
+    differenceKinectHeight[0] = 1;
+  }
+  if (key == '2') {
+    differenceKinectHeight[1] = 1;
+  }
+  if (key == '3') {
+    differenceKinectHeight[2] = 1;
+  }
+  if (key == '4') {
+    differenceKinectHeight[3] = 1;
   }
 }
 
