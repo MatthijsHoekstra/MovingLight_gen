@@ -298,6 +298,7 @@ void interimStart() {
   showModus ++;
   if (showModus > 8) {
     showModus = 5;
+    //colormodus= showmodus - 5 // 0 - 3
   }
  
   Ani.to(this, 1, "position", 0.0, Ani.LINEAR, "onEnd:finishedCrossfade");

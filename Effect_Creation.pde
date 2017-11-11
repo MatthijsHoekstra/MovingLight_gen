@@ -1,6 +1,8 @@
 int tresholdDifferenceKinectHeight = 15;
 
 void summonEffects() {
+  
+  
   for (int i =0; i < 4; i++) {
     if (differenceKinectHeight[i] > tresholdDifferenceKinectHeight) {
       // start gravitywavepulse

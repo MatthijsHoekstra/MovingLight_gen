@@ -30,9 +30,9 @@ class gravityWavePulse {
 
   void update() {
     pushStyle();
-    fill(255,205 - x);
 
     if (direction == LEFT_RIGHT) {
+      fill(255, 205 - x);
       beginShape();
       vertex(15 + x, 0);
       vertex(0 + x, widthLEDStrip);
@@ -42,6 +42,8 @@ class gravityWavePulse {
     }
 
     if (direction == RIGHT_LEFT) {
+      //println(x);
+      fill(255, int(map(x, 0, -205, 205, 0)));
       beginShape();
       vertex(15 + x, 0);
       vertex(0 + x, widthLEDStrip);

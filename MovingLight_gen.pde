@@ -37,7 +37,7 @@ private TimedEventGenerator gravityWavePulseTimer;
 
 int pixelSize = 2; //Determines how many pixels on the screen define 1 pixel on LED strip //Can be used for optimalization later on
 
-boolean helpGrid = true;
+boolean helpGrid = false;
 
 int udpPort = 5000;
 
