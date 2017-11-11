@@ -1,13 +1,17 @@
 int tresholdDifferenceKinectHeight = 15;
 
-void summonEffects() {
-  
-  
+color[] primaryColor = {#0061ff,  #ff0000,  #00ff6e, #00e9ff}; //{#ffffff,  #ffffff,  #ffffff}
+
+color[] secondaryColor = {#0061ff,  #ff0000,  #00ff6e, #00e9ff}; //{#ffffff,  #ffffff,  #ffffff}
+
+
+void summonEffects() { 
+
   for (int i =0; i < 4; i++) {
     if (differenceKinectHeight[i] > tresholdDifferenceKinectHeight) {
       // start gravitywavepulse
       println("tunnel " + i + " is stage " + gravityWaveStage[i]);
-      
+
       generator[i + i*3].addGravityWavePulse(50, FULL_LENGTH_TUNNEL, 0);
       generator[i+1+ i*3].addGravityWavePulse(50, FULL_LENGTH_TUNNEL, 10);
       generator[i+2+ i*3].addGravityWavePulse(50, FULL_LENGTH_TUNNEL, 20);
@@ -79,3 +83,20 @@ void timeRipplePulseActivated() {
     //println("pulse disabled");
   }
 }
+
+//void changeColorInstallation(int colorNumber) {
+
+//  for (int i = 0; i < generator.length; i++) {
+//    for (int j = 0; j < generator[i].gravityWavePulses.size(); i++) {
+//      gravityWavePulse gravityWavesPulse = generator[i].gravityWavePulses.get(i);
+
+//      gravityWavesPulse.fill = primaryColor[];
+//    }
+
+//    for (int j = 0; j < generator[i].gravityWaves.size(); i++) {
+//      gravityWave gravityWaves = generator[i].gravityWaves.get(i);
+
+//      gravityWaves.fill = secondaryColor[colorNumber];
+//    }
+//  }
+//}

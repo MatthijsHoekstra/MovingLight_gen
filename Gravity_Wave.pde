@@ -6,6 +6,8 @@ class gravityWave {
   int x, y;
 
   boolean finished = false;
+  
+  color fill = #ffffff;
 
   gravityWave(int direction_, int duration_, int nSteps_, int size_, int startPosition_) {
     direction = direction_;

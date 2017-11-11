@@ -6,6 +6,8 @@ class gravityWavePulse {
   boolean finished = false;
 
   int opacity = 255;
+  
+  color fill = primaryColor[showModus - 5];
 
   gravityWavePulse(int direction_, int duration_, int distance_, int delay_) {
     direction = direction_;
@@ -32,7 +34,7 @@ class gravityWavePulse {
     pushStyle();
 
     if (direction == LEFT_RIGHT) {
-      fill(255, 205 - x);
+      fill(fill, 205 - x);
       beginShape();
       vertex(15 + x, 0);
       vertex(0 + x, widthLEDStrip);
@@ -43,7 +45,7 @@ class gravityWavePulse {
 
     if (direction == RIGHT_LEFT) {
       //println(x);
-      fill(255, int(map(x, 0, -205, 205, 0)));
+      fill(fill, int(map(x, 0, -205, 205, 0)));
       beginShape();
       vertex(15 + x, 0);
       vertex(0 + x, widthLEDStrip);

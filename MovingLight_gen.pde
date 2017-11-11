@@ -28,7 +28,6 @@ DynamicResponseHandler responder1, responder2;
 
 private TimedEventGenerator statusOutTimer;
 private TimedEventGenerator timeRipplePulseTimer;
-private TimedEventGenerator gravityWavePulseTimer;
 ;
 
 
@@ -37,7 +36,7 @@ private TimedEventGenerator gravityWavePulseTimer;
 
 int pixelSize = 2; //Determines how many pixels on the screen define 1 pixel on LED strip //Can be used for optimalization later on
 
-boolean helpGrid = false;
+boolean helpGrid = true;
 
 int udpPort = 5000;
 
