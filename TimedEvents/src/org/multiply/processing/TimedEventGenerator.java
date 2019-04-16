@@ -137,6 +137,9 @@ public class TimedEventGenerator {
    * @param isEnabled whether or not the timer event will fire in the parent sketch.
    */
   public void setEnabled(boolean isEnabled) {
+    if (this.isEnabled == isEnabled) {
+      return;
+    }
     if (this.isEnabled) {
       cancelTask();
     } else {
